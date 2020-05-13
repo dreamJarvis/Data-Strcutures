@@ -17,24 +17,24 @@ using namespace std;
 //     return maxdiff;
 // }
 
-// // rt : 16ms
-// int maxProfit(vector<int> &arr) {
-//     int n = arr.size();
-//
-//     int small = arr[0], diff = INT_MIN;
-//     for(int i = 1; i < n; i++){
-//         int currDiff = arr[i] - small;
-//         if(currDiff > diff){
-//             diff = currDiff;
-//             small = min(small, arr[i]);
-//         }
-//     }
-//
-//     return diff;
-// }
+// rt : 16ms
+int maxProfit1(vector<int> &arr) {
+    int n = arr.size();
+
+    int small = arr[0], diff = INT_MIN;
+    for(int i = 1; i < n; i++){
+        int currDiff = arr[i] - small;
+        if(currDiff > diff){
+            diff = currDiff;
+            small = min(small, arr[i]);
+        }
+    }
+
+    return diff;
+}
 
 // rt : 4ms
-int maxProfit(vector<int>& prices) {
+int maxProfit2(vector<int>& prices) {
     if(prices.size() == 0 || prices.size() < 2) return 0;
     int maxProfit = 0, minPrice = prices[0];
 

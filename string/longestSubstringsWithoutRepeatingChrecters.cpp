@@ -6,7 +6,6 @@ using namespace std;
 int lengthOfLongestSubstring(string s) {
     int n = s.length();
 
-    // unordered_map<string, bool> visited;
     int i = 0;
     int length = 0, maxLength = 0;
     while(i < n){

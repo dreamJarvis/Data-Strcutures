@@ -1,3 +1,4 @@
+
 // bfs : breadth firsg implementation of a undirected graph
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,9 +29,12 @@ public:
 
 
 // Depth firs traversal of the graph
-// goes deep: it will exhaust every connected element to the root element, then move to another element int the list
+// goes deeeeeeeeep: it will exhaust every connected element to the root element, then move to another element int the list
+// V -> vertices, E -> edges
+// time complexity : O(|v| + |E|)
+// space complexity : O(|v|)
 void Graph::DFS(int root){
-    cout << "\n\nBFS : \t";
+    cout << "\n\nDFS : \t";
 
     stack<int> s;
     unordered_map<int, bool> visited;
@@ -41,12 +45,14 @@ void Graph::DFS(int root){
         int curr = s.top();
         s.pop();
 
+        // if this node has not been visited
         if(!visited.count(curr)){
             visited[curr] = true;
             cout << curr << " ";
         }
 
         for(auto value:adjList[curr]){
+            // if this node has not been visited
             if(!visited.count(value)){
                 s.push(value);
             }
