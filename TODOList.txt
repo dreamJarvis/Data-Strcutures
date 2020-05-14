@@ -32,6 +32,7 @@ https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/
 https://leetcode.com/problems/pyramid-transition-matrix/
 https://leetcode.com/problems/masking-personal-information/
 https://leetcode.com/problems/minimum-swaps-to-make-strings-equal/
+https://leetcode.com/problems/set-matrix-zeroes/
 
 buy and sell stock wale sare questions
 https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
