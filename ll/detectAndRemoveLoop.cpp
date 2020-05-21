@@ -2,24 +2,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// definatation Node
 struct Node {
     int key;
     Node *next;
 };
 
-Node *newNode(int key){
-    Node *temp = new Node();
-    temp->key = key;
+// to Create a new Node
+Node* newNode(int data){
+    Node* temp = new Node();
+    temp->key = data;
     temp->next = nullptr;
-    return temp;
+    return temp;                        // new node
 }
 
+// to display a linked list
 void printList(Node *head){
     while(head != nullptr){
         cout << head->key << " ";
         head = head->next;
     }
-    cout << endl;
+    cout << "\n";
+}
+
+// to insert a node in a linked list
+// insert's a node at the head
+//  ll : 2->4->8, insert(10); => 10 -> 2 -> 4 -> 8
+void insertNode(Node* &root, int data){
+    Node *node = createNode(data);
+
+    if(root == nullptr){
+        root = node;//98
+        return ;
+    }
+
+    node->next = root;
+    root = node;
+    return ;
+}
+
+// insert at tail
+void insertAtTail(Node *&root, int data){
+    Node *node = createNode(data);
+
+    // agar head null h toh, head me value insert kr denge
+    if(root == nullptr){
+        root = node;
+        return ;
+    }
+
+    Node *temp = root;
+    while(temp->next != nullptr)
+        temp = temp->next;
+
+    temp->next = newNode;
+    return ;
 }
 
 // function to detect and remove loop in a linked list that may contain loop

@@ -8,7 +8,7 @@ struct Node{
 };
 
 Node *createNode(int data){
-    Node *newNode = new Node();    
+    Node *newNode = new Node();
     newNode->data = data;
     newNode->next = nullptr;
     return newNode;
@@ -39,7 +39,7 @@ void display(Node *root){
 Node *mergeSortedLL(Node *a, Node *b){
     Node *result = nullptr;
 
-    // base cases : 
+    // base cases :
     if(a == nullptr)    return b;
     else if(b == nullptr)   return a;
 

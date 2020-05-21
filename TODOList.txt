@@ -40,3 +40,16 @@ leetcode : 992 (unsolved)
 https://leetcode.com/problems/delete-operation-for-two-strings/
 https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/
 https://leetcode.com/problems/uncrossed-lines/
+https://leetcode.com/problems/longest-palindromic-subsequence/
+https://leetcode.com/problems/delete-operation-for-two-strings/
+https://leetcode.com/problems/unique-paths-iii/
+
+https://leetcode.com/problems/zigzag-conversion/
+https://leetcode.com/problems/search-a-2d-matrix-ii/
+https://leetcode.com/problems/search-a-2d-matrix/
+https://leetcode.com/problems/trapping-rain-water/
+
+NextGreaterElement
+https://leetcode.com/problems/next-greater-element-i/
+https://leetcode.com/problems/next-greater-element-ii/
+https://leetcode.com/problems/next-greater-element-iii/

@@ -8,22 +8,43 @@ struct Node{
 };
 
 Node *createNode(int data){
-    Node *newNode = new Node();    
+    Node *newNode = new Node();
     newNode->data = data;
     newNode->next = nullptr;
     return newNode;
 }
 
-void insertNode(Node *&root, int data){
+// to insert a node in a linked list
+// insert's a node at the head
+//  ll : 2->4->8, insert(10); => 10 -> 2 -> 4 -> 8
+void insertNode(Node* &root, int data){
     Node *node = createNode(data);
 
     if(root == nullptr){
-        root = node;
+        root = node;//98
         return ;
     }
 
     node->next = root;
     root = node;
+    return ;
+}
+
+// insert at tail
+void insertAtTail(Node *&root, int data){
+    Node *node = createNode(data);
+
+    // agar head null h toh, head me value insert kr denge
+    if(root == nullptr){
+        root = node;
+        return ;
+    }
+
+    Node *temp = root;
+    while(temp->next != nullptr)
+        temp = temp->next;
+
+    temp->next = newNode;
     return ;
 }
 
@@ -82,12 +103,16 @@ Node *mergeSortedLL(Node *a, Node *b){
 
 // Driver function
 int main(){
-    Node *list_1 = nullptr;
+    Node* list_1 = nullptr;
     insertNode(list_1, 98);
     insertNode(list_1, 57);
     insertNode(list_1, 31);
     insertNode(list_1, 30);
     insertNode(list_1, 10);
+
+    // head = nullptr
+    // insert(98), head -> 98
+    // insert(57), head -> 57 -> 98
 
 
     display(list_1);
