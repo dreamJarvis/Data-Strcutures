@@ -53,3 +53,15 @@ NextGreaterElement
 https://leetcode.com/problems/next-greater-element-i/
 https://leetcode.com/problems/next-greater-element-ii/
 https://leetcode.com/problems/next-greater-element-iii/
+
+
+prefix sum ke questions practice krle bhai
+https://www.geeksforgeeks.org/prefix-sum-array-implementation-applications-competitive-programming/
+
+https://www.geeksforgeeks.org/tag/prefix-sum/
+https://www.geeksforgeeks.org/find-number-distinct-palindromic-sub-strings-given-string/
+https://www.geeksforgeeks.org/find-palindromic-sub-strings-given-string-set-2/
+
+N queens
+https://leetcode.com/problems/n-queens/
+maximum sum subarray
