@@ -1,6 +1,6 @@
+// Duplicacy removal
 #include <bits/stdc++.h>
 using namespace std;
-
 
 // Driver function
 int main(){

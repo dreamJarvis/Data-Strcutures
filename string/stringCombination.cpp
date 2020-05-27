@@ -30,10 +30,10 @@ int countSubsequences(string str, string ans){
 
 // Driver function
 int main(){
-    string str = "abc";
+    string str = "tacocat";
 
-    printSubsequences(str, "");
-    // cout << countSubsequences(str, "") << endl;
+    // printSubsequences(str, "");
+    cout << countSubsequences(str, "") << endl;
 
     return 0;
 }

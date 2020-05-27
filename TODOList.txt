@@ -65,3 +65,15 @@ https://www.geeksforgeeks.org/find-palindromic-sub-strings-given-string-set-2/
 N queens
 https://leetcode.com/problems/n-queens/
 maximum sum subarray
+
+ugly number problems
+factorial related problems
+
+// palindrome problems
+https://leetcode.com/problems/palindromic-substrings/
+https://leetcode.com/problems/shortest-palindrome/
+https://leetcode.com/problems/palindrome-pairs/
+https://leetcode.com/problems/palindromic-substrings/
+https://www.geeksforgeeks.org/count-palindrome-sub-strings-string/
+https://www.geeksforgeeks.org/find-number-distinct-palindromic-sub-strings-given-string/
+https://www.geeksforgeeks.org/count-palindrome-sub-strings-string-set-2/
