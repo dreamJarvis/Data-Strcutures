@@ -74,7 +74,7 @@ bool deletion(Trie *curr, string str){
     if(index < str.length()){
         // recur for the node corresponding to the next charecter in the string
         // if it return true and doesnt have any children, then deleted it
-        if( curr != nullptr && 
+        if( curr != nullptr &&
             curr->map.find(str[index]) != curr->map.end() &&
             deletion(curr->map[str[index]], str.substr(index+1)) &&
             curr->isLeaf == false

@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Graph{
+class Graph {
     int V;
     list<int> *adj;
     void DFSUtil(int v, vector<bool> &visited);
@@ -17,6 +17,8 @@ Graph::Graph(int V){
     adj = new list<int>[V];
 }
 
+// DFS Traversal on every node/vertex
+// yha pr do he cheeze ho skti h, ya toh current node se sare node visit kr payenge, ya hm kisi leaf nodes se exit kr jayenge, ya hm kisi sub-graph ke group me phas jayenge
 void Graph::DFSUtil(int v, vector<bool> &visited){
     visited[v] = true;
     for(auto i:adj[v]){
@@ -25,6 +27,7 @@ void Graph::DFSUtil(int v, vector<bool> &visited){
     }
 }
 
+// adding edge to the graph
 void Graph::addEdge(int v, int w){
     adj[v].push_back(w);
 }
@@ -33,6 +36,7 @@ int Graph::findMother(){
     vector<bool> visited(V, false);
     int v = 0;
 
+    // hr wo node jis pr hm current node se visit nhi kr paye, hm waha se chek krenge ki kya mother vertex mil skta he ya nhi
     for(int i = 0; i < V; i++){
         if(visited[i] == false){
             DFSUtil(i, visited);
@@ -43,7 +47,8 @@ int Graph::findMother(){
     fill(visited.begin(), visited.end(), false);
     DFSUtil(v, visited);
 
-    for(int i = 0; i < V; i++){
+    // agr v se koi bhi node visited nhi h toh ye mother vertex nhi h
+    for(int i=0; i < V; i++){
         if(visited[i] == false)
             return -1;
     }
@@ -51,8 +56,8 @@ int Graph::findMother(){
     return v;
 }
 
-// Driver function
 int main(){
+	// Create a graph given in the above diagram
 	Graph g(7);
 	g.addEdge(0, 1);
 	g.addEdge(0, 2);

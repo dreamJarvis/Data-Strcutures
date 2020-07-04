@@ -1,12 +1,10 @@
-// C++ Implementation of Kosaraju's algorithm to print all SCCs
-#include <iostream>
-#include <list>
-#include <stack>
+// C++ Implementation of Kosaraju's algorithm to print all SCCs(strongly connected components)
+#include <bits/stdc++.h>
 using namespace std;
 
 class Graph {
-	int V; // No. of vertices
-	list<int> *adj; // An array of adjacency lists
+	int V;				// No. of vertices
+	list<int> *adj; 	// An array of adjacency lists
 
     // jiss node ko sbse last me visit krenge ussko sbse upr rkhenge
 	void fillOrder(int v, bool visited[], stack<int> &Stack);
@@ -18,16 +16,14 @@ public:
 	Graph(int V);
 	void addEdge(int v, int w);
 
-	// The main function that finds and prints strongly connected
-	// components
+	// The main function that finds and prints strongly connected components
 	void printSCCs();
 
 	// Function that returns reverse (or transpose) of this graph
 	Graph getTranspose();
 };
 
-Graph::Graph(int V)
-{
+Graph::Graph(int V){
 	this->V = V;
 	adj = new list<int>[V];
 }
@@ -39,9 +35,9 @@ void Graph::DFSUtil(int v, bool visited[]){
 	cout << v << " ";
 
 	// Recur for all the vertices adjacent to this vertex
-	for (auto list:adj[v]){
-		if (!visited[list])
-			DFSUtil(list, visited);
+	for (auto listItem:adj[v]){
+		if (!visited[listItem])
+			DFSUtil(listItem, visited);
     }
 }
 
@@ -50,8 +46,8 @@ Graph Graph::getTranspose(){
 	Graph g(V);
 
     for(int v = 0; v < V; v++){
-        for(auto list:adj[v])
-            g.adj[list].push_back(v);
+        for(auto listItem:adj[v])
+            g.adj[listItem].push_back(v);
     }
 
 	return g;
@@ -72,7 +68,7 @@ void Graph::fillOrder(int v, bool visited[], stack<int> &Stack){
 			fillOrder(*i, visited, Stack);
 
 	// All vertices reachable from v are processed by now, push v
-    cout << Stack.size() << endl;
+    // cout << Stack.size() << endl;
 	Stack.push(v);
 }
 
@@ -105,8 +101,7 @@ void Graph::printSCCs(){
 		Stack.pop();
 
 		// Print Strongly connected component of the popped vertex
-		if (visited[v] == false)
-		{
+		if (visited[v] == false){
 			gr.DFSUtil(v, visited);
 			cout << endl;
 		}

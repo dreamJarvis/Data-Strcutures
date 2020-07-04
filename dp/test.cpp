@@ -1,52 +1,49 @@
-// Backspace String Compare
 #include <bits/stdc++.h>
 using namespace std;
 
-struct BTree {
-    int val;
-    BTree *left, *right;
-};
+bool canPartitionKSubsets(vector<int>& nums, int k) {
+    int n = nums.size(), sum = 0;
 
-BTree *createNode(int data){
-    BTree *newNode = new BTree();
-    newNode->val = data;
-    newNode->left = newNode->right = nullptr;
-    return newNode;
-}
+    int dp[(1<<16)+2];
+    fill(dp, dp+(1<<16)+2, -1);
 
-// rcursively inserting node in Binary tree
-BTree *insertNode(BTree *root, int data){
-    if(root == nullptr){
-        BTree *newNode = createNode(data);
-        return newNode;
+    dp[0] = 0;
+
+    for (int i = 0; i < n; i++) sum += nums[i];
+    if (sum % k) return false;
+    int tar = sum/k;
+
+    for (int mask = 0; mask < (1<<n); mask++) {
+        if (dp[mask] == -1) continue;  // if current state is illegal, simply ignore it
+        for (int i = 0; i < n; i++) {
+            if (!(mask&(1<<i)) && dp[mask]+nums[i] <= tar){
+                dp[mask|(1<<i)] = (dp[mask]+nums[i]) % tar;
+                cout << (1 << i) << "\tdp[" << (mask) << "] --> " << dp[mask] << ",  dp["<< (mask|(1<<i)) << "] --> " << dp[mask|(1<<i)] << endl;
+            }
+        }
+        cout << "\n\n";
     }
 
-    if(root->left != nullptr)
-        root->left = insertNode(root->left, data);
-    root->right = insertNode(root->right, data);
-
-    return root;
-}
-
-void inorderTraversal(BTree *root){
-    if(root == nullptr) return ;
-
-    inorderTraversal(root->left);
-    cout << root->val << " ";
-    inorderTraversal(root->right);
+    return dp[(1<<n)-1] == 0;
 }
 
 // Driver function
 int main(){
-    BTree *root = nullptr;
+    // vector<int> nums({4, 3, 2, 3, 5, 2, 1});
+    // int k = 4;
+    // vector<int> nums({2,2,2,2,3,4,5});
+    // int k = 4;
+    // vector<int> nums({10,10,10,7,7,7,7,7,7,6,6,6});
+    // int k = 3;
+    vector<int> nums({5, 3, 2});
+    int k = 2;
 
-    root = insertNode(root, 1);
-    root = insertNode(root, 2);
-    root = insertNode(root, 3);
-    root = insertNode(root, 4);
-    root = insertNode(root, 5);
-
-    inorderTraversal(root);
+    cout << canPartitionKSubsets(nums, k) << endl;
+    // canPartitionKSubsets(nums, k);
 
     return 0;
 }
+/*
+[10,10,10,7,7,7,7,7,7,6,6,6]
+3
+*/

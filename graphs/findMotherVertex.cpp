@@ -2,7 +2,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 class directedGraph{
 public:
     unordered_map<int, list<int>> adjList;
