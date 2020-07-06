@@ -1,6 +1,5 @@
-// A C++ program for Prim's Minimum
-// Spanning Tree (MST) algorithm. The program is
-// for adjacency matrix representation of the graph
+// A C++ program for Prim's Minimum Spanning Tree (MST) algorithm.
+// The program is for adjacency matrix representation of the graph
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -37,7 +36,7 @@ void printMST(int parent[], int graph[V][V]){
         cout << parent[i] << " - " << i << "\t" << graph[i][parent[i]] << endl;
 }
 
-// MST
+// Function to construct and print MST for a graph represented using adjacency matrix representation
 void primMST(int graph[V][V]){
     int parent[V];      // ye MST store rkhega
     int key[V];         // weight of edge
@@ -60,13 +59,21 @@ void primMST(int graph[V][V]){
         // ye root vertex ko true set kr denge, cause we have included in the MST
         mstSet[u] = true;
 
+
+        // Update key value and parent index of the adjacent vertices of the picked vertex.
+        // Consider only those vertices which are not yet included in MST
+
         // ab root vertex se jitne bhi vertex edge bna rhe, unmese jiska minimum weight higa, hm usse select krenge, and then ussko as a next root element le knege..yhi process chlta rhega  graph ke hr vetex ke liye
         for(int v = 0; v < V; v++){
+            // graph[u][v] is non zero only for adjacent vertices of m
+            // mstSet[v] is false for vertices not yet included in MST
+            // Update the key only if graph[u][v] is smaller than key[v]
             if(graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])
                 parent[v] = u, key[v] = graph[u][v];
         }
     }
 
+    // prints the MST
     printMST(parent, graph);
 }
 
