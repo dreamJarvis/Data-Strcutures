@@ -39,6 +39,6 @@ int main(){
 	int n = sizeof(arr)/sizeof(arr[0]);
 
 	allPossibleSubset(arr,n);
-	
+
 	return 0;
 }

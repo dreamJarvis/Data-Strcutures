@@ -4,8 +4,7 @@
 using namespace std;
 
 // Returns maximum possible palindrome using k changes
-string maximumPalinUsingKChanges(string str, int k)
-{
+string maximumPalinUsingKChanges(string str, int k) {
 	string palin = str;
 
 	// Iinitialize l and r by leftmost and
@@ -47,14 +46,8 @@ string maximumPalinUsingKChanges(string str, int k)
 
 		// If character at lth (same as rth) is
 		// less than 9
-		if (palin[l] < '9')
-		{
-			/* If none of them is changed in the
-			previous loop then subtract 2 from K
-			and convert both to 9 */
-			if (k >= 2 && palin[l] == str[l] &&
-				palin[r] == str[r])
-			{
+		if (palin[l] < '9'){
+			if (k >= 2 && palin[l] == str[l] && palin[r] == str[r]){
 				k -= 2;
 				palin[l] = palin[r] = '9';
 			}
@@ -62,9 +55,7 @@ string maximumPalinUsingKChanges(string str, int k)
 			/* If one of them is changed in the previous
 				loop then subtract 1 from K (1 more is
 				subtracted already) and make them 9 */
-			else if (k >= 1 && (palin[l] != str[l] ||
-								palin[r] != str[r]))
-			{
+			else if (k >= 1 && (palin[l] != str[l] || palin[r] != str[r])){
 				k--;
 				palin[l] = palin[r] = '9';
 			}
