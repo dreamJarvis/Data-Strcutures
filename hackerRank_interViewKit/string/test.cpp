@@ -1,77 +1,86 @@
-// C++ program to get largest palindrome changing
-// atmost K digits
+// A C++ dynamic programming
+// solution for longest palindrome
+
 #include <bits/stdc++.h>
 using namespace std;
 
-// Returns maximum possible palindrome using k changes
-string maximumPalinUsingKChanges(string str, int k) {
-	string palin = str;
-
-	// Iinitialize l and r by leftmost and
-	// rightmost ends
-	int l = 0;
-	int r = str.length() - 1;
-
-	// first try to make string palindrome
-	while (l < r)
-	{
-		// Replace left and right character by
-		// maximum of both
-		if (str[l] != str[r])
-		{
-			palin[l] = palin[r] = max(str[l], str[r]);
-			k--;
-		}
-		l++;
-		r--;
-	}
-
-	// If k is negative then we can't make
-	// string palindrome
-	if (k < 0)
-		return "Not possible";
-
-	l = 0;
-	r = str.length() - 1;
-
-	while (l <= r)
-	{
-		// At mid character, if K>0 then change
-		// it to 9
-		if (l == r)
-		{
-			if (k > 0)
-				palin[l] = '9';
-		}
-
-		// If character at lth (same as rth) is
-		// less than 9
-		if (palin[l] < '9'){
-			if (k >= 2 && palin[l] == str[l] && palin[r] == str[r]){
-				k -= 2;
-				palin[l] = palin[r] = '9';
-			}
-
-			/* If one of them is changed in the previous
-				loop then subtract 1 from K (1 more is
-				subtracted already) and make them 9 */
-			else if (k >= 1 && (palin[l] != str[l] || palin[r] != str[r])){
-				k--;
-				palin[l] = palin[r] = '9';
-			}
-		}
-		l++;
-		r--;
-	}
-
-	return palin;
+// Function to print a substring
+// str[low..high]
+void printSubStr(
+	string str, int low, int high)
+{
+	for (int i = low; i <= high; ++i)
+		cout << str[i];
 }
 
-// Driver code to test above methods
+// This function prints the
+// longest palindrome substring
+// It also returns the length of
+// the longest palindrome
+int longestPalSubstr(string str)
+{
+	// get length of input string
+	int n = str.size();
+
+	// table[i][j] will be false if substring
+	// str[i..j] is not palindrome.
+	// Else table[i][j] will be true
+	bool table[n][n];
+
+	memset(table, 0, sizeof(table));
+
+	// All substrings of length 1
+	// are palindromes
+	int maxLength = 1;
+
+	for (int i = 0; i < n; ++i)
+		table[i][i] = true;
+
+	// check for sub-string of length 2.
+	int start = 0;
+	for (int i = 0; i < n - 1; ++i) {
+		if (str[i] == str[i + 1]) {
+			table[i][i + 1] = true;
+			start = i;
+			maxLength = 2;
+		}
+	}
+
+    long totalPalindromeCount = 0;
+	// Check for lengths greater than 2.
+	// k is length of substring
+	for (int k = 3; k <= n; ++k) {
+		// Fix the starting index
+		for (int i = 0; i < n - k + 1; ++i) {
+			// Get the ending index of substring from
+			// starting index i and length k
+			int j = i + k - 1;
+
+			// checking for sub-string from ith index to
+			// jth index iff str[i+1] to str[j-1] is a
+			// palindrome
+			if (table[i + 1][j - 1] && str[i] == str[j]) {
+				table[i][j] = true;
+                totalPalindromeCount++;
+				if (k > maxLength) {
+					start = i;
+					maxLength = k;
+				}
+			}
+		}
+	}
+
+	// cout << "Longest palindrome substring is: ";
+	// printSubStr(str, start, start + maxLength - 1);
+
+	// return length of LPS
+	return totalPalindromeCount;
+}
+
+// Driver Code
 int main()
 {
-	string str = "43435";
-	int k = 3;
-	cout << maximumPalinUsingKChanges(str, k);
+	string str = "abcbaba";
+    cout << longestPalSubstr(str) << endl;
 	return 0;
 }
