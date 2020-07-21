@@ -1,161 +1,121 @@
-// to count all the palindromic substrings in the given strings
-/*
-    resources used :
-
-    brute force O(n^3) : https://www.geeksforgeeks.org/generating-subarrays-using-recursion/
-
-    memoisation O(n^2) : https://rusyasoft.github.io/algorithms,%20leetcode/2019/05/29/algorithms-longest-substring-palindrome/
-
-    DP tabulation O(n^2) : https://www.geeksforgeeks.org/longest-palindrome-substring-set-1/
-
-*/
+// to generate all palindromic substrings in a given string
 #include <bits/stdc++.h>
 using namespace std;
 
-// bool isPalindrome(string str){
-//     int l = 0;
-//     int r = str.size()-1;
-//
-//     while(l <= r){
-//         if(str[l] != str[r])
-//             return false;
-//
-//         l++;
-//         r--;
-//     }
-//
-//     return true;
-// }
-//
-// void substrCountUtil(string s, int start, int end){
-//     if(end == s.size()){
-//         return ;
-//     }
-//     else if(start > end){
-//         substrCountUtil(s, 0, end+1);
-//     }
-//     else {
-//         string str="";
-//         for(int i = start; i <= end; i++)
-//             str += s[i];
-//
-//         if(isPalindrome(str)){
-//             cout << str << endl;
-//             totalCount++;
-//         }
-//
-//         substrCountUtil(s, start+1, end);
-//     }
-//
-//     return ;
-// }
-//
-// long substrCount(string s) {
-//     substrCountUtil(s, 0, 0);
-//     return totalCount;
-// }
+// check if it is palindrome or not
+// tc : O(n)
+bool isPalindrome(int arr[], int start, int end){
+	while(start <= end){
+		if(arr[start] != arr[end])
+			return false;
+		start++;
+		end--;
+	}
+	return true;
+}
 
-// // wrong result
-// // memoisation technique
-// // global variables
-// unordered_map<string, bool> palindromeTable;
-//
-// bool isPalindrome(int si, int ei, string str){
-//     string key = to_string(si) + to_string(ei);
-//
-//     if(palindromeTable[key]){
-//         // cout << str.substr(si, ei) << endl;
-//         // totalPalindromeCount++;
-//         return true;
-//     }
-//
-//     if(si == ei){
-//         // totalPalindromeCount++;
-//         // cout << str.substr(si, ei) << endl;
-//         palindromeTable[key] = true;
-//         return palindromeTable[key];
-//     }
-//
-//     // the first charecters
-//     char ch1 = str[si];
-//     char ch2 = str[ei];
-//
-//     // if the charecters are adjacent
-//     if(si == ei - 1){
-//         return (ch1 == ch2 ? palindromeTable[key] : false);
-//     }
-//
-//     if(ch1 == ch2 && isPalindrome(si+1, ei-1, str)){
-//         // totalPalindromeCount++;
-//         // cout << str.substr(si, ei) << endl;
-//         palindromeTable[key] = true;
-//         return palindromeTable[key];
-//     }
-//     else
-//         return false;
-// }
-//
-// long substrCount(string str){
-//     if(str.size() <= 1)   return str.size();
-//
-//     int len = str.size();
-//
-//     for(int i = 0; i < len-1; i++)
-//         for(int j = i; i < len; i++)
-//             isPalindrome(i, j, str);
-//
-//     // to count all the palindromes
-//     long totalPalindromeCount = 0;
-//     for(auto i:palindromeTable)
-//         if(i.second)
-//             totalPalindromeCount++;
-//
-//
-//     return totalPalindromeCount;
-// }
+// tc : O(n^3)
+void generateSubsets(int arr[], int n, int start, int end){
+	if(end == n){
+		return ;
+	}
+	else if(start > end){
+		generateSubsets(arr, n, 0, end+1);
+	}
+	else {
+		// if palindrome , then print the sub-array
+		if(isPalindrome(arr, start, end)){					// O(n)
+			cout << "[ ";
+			for(int i = start; i < end; i++)
+				cout << arr[i] <<", ";
+			cout << arr[end] << " ]\n";
+		}
+		generateSubsets(arr, n, start+1, end);				// O(n^2)
+	}
+}
 
-// tabulation : O(n^2)
-long substrCountDP(string str){
-    int n = str.size();
-    bool dp[n][n] = {false};
-    long totalPalindromeCount = n;
+// memoisation
+// O(n^2)
+void generateSubsetsMemo(int arr[], int n, int start, int end, unordered_map<string, bool> &table){
+	string key = to_string(start) + "_" + to_string(end);
 
-    // all substrings of length 1 are palindrome
-    for(int i = 0; i < n; i++)
-        dp[i][i] = true;
+	if(end == n){
+		return ;
+	}
 
-    // checking palindromes for substrings of length 2
-    for(int i = 0; i < n-1; i++){
-        if(str[i] == str[i+1]){
-            dp[i][i+1] = true;
-            totalPalindromeCount++;
-        }
-    }
+	else if(table[key])
+		return ;
+
+	else if(start > end){
+		generateSubsetsMemo(arr, n, 0, end+1, table);
+	}
+	else {
+		// if palindrome , then print the sub-array
+		if(table[key] || isPalindrome(arr, start, end)){					// O(n)
+			cout << "[ ";
+			for(int i = start; i < end; i++)
+				cout << arr[i] <<", ";
+			cout << arr[end] << " ]\n";
+
+			table[key] = true;
+		}
+		generateSubsetsMemo(arr, n, start+1, end, table);				// O(n^2)
+	}
+}
+
+void generateSubsetsMemoUTIL(int arr[], int n){
+	unordered_map<string, bool> table;
+	generateSubsetsMemo(arr, n, 0, 0, table);
+}
 
 
-    for(int len = 3; len <= n; len++){
-        for(int row = 0; row < n - len + 1; row++){
-            int endIndex = row + len - 1;
+// Tabulation method : O(n^2)
+void generateSubsetsDP(int arr[], int n){
+	bool dp[n][n] = {false};			// dp table
 
-            if(dp[row + 1][endIndex - 1] && str[row] == str[endIndex]){
-                dp[row][endIndex] = true;
-                totalPalindromeCount++;
-            }
-            else{
-                dp[row][endIndex] = false;
-            }
-        }
-    }
+	// all the single element are palindromes
+	for(int i = 0; i < n; i++){
+		dp[i][i] = true;
+		cout << "[ " << arr[i] << " ]" << endl;
+	}
 
-    return totalPalindromeCount;
+	// finding if there are palindromes of length 2
+	for(int i = 0; i < n; i++){
+		if(arr[i] == arr[i+1]){
+			dp[i][i+1] = true;
+			cout << "asd[" << arr[i] << ", "<< arr[i+1] << "]";
+		}
+	}
+
+	// finding all the palindroes of length >= 3
+	for(int len = 3; len <= n; len++){
+		for(int row = 0; row < n - len + 1; row++){
+			int col = row + len - 1;
+
+			if(arr[row] == arr[col] && dp[row+1][col-1]){
+				dp[row][col] = true;
+
+				// printing the possible subset
+				cout << "[ ";
+				for(int i = row; i <= col; i++)
+					cout << arr[i] << ", ";
+				cout << " ]"<< endl;
+			}
+		}
+	}
+
+	return ;
 }
 
 // Driver function
 int main(){
-    // string str = "aaaa";
-    string str = "abcbaba";
+	int arr[] = {1, 2, 3, 2, 1, 3};
+	int n = sizeof(arr)/sizeof(arr[0]);
 
-    cout << substrCountDP(str) << endl;
+	// generateSubsets(arr, n, 0, 0);
+	generateSubsetsDP(arr, n);
+	// generateSubsetsMemoUTIL(arr, n);
 
-    return 0;
+
+	return 0;
 }
