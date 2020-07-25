@@ -18,7 +18,7 @@ void updateValueUtil(int *st, int ss, int se, int i, int diff, int si){
     then update the value of the node and its childern */
     st[si] = st[si] + diff;
 
-    // issme ye as a base condition, ki jb hm segment trees ke leaf nodes pr poch jayenge , tb aage recursion nhi krenge 
+    // issme ye as a base condition, ki jb hm segment trees ke leaf nodes pr poch jayenge , tb aage recursion nhi krenge
     if(se != ss){
         int mid = getMid(ss, se);
         updateValueUtil(st, ss, mid, i, diff, 2*si+1);

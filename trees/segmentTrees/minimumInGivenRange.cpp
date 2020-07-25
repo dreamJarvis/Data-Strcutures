@@ -7,14 +7,32 @@ using namespace std;
 void updateValueUtil(   vector<int> arr, vector<int> &segmentTree,
                         int ss, int se, int si, int index, int value
 ){
+    // so, if index is not in the range of the tree, we will return
     if(index < ss || index > se)
         return ;
 
-    segmentTree[si] = min(value, segmentTree[si]);
-    if(se != ss){
+    /*  toh hme jb pta h ki , yha tk program ka flow tbhi poch payega tbm upr wala base condition pass ho,
+        i.e. index lies in the range bts [ss, se]
+        toh ss == se, bs ussi range ke liye possible hoga jisme iss index ki nvalue originally stored thi
+    */
+    if(ss == se){
+        arr[index]  = value;
+        segmentTree[si] = value;
+        return ;
+    }
+
+    // for the rest of the tree, where index is in the range
+
+    // ss != se, avoids unnecessay recursion beyond leaf nodes
+    if(ss != se){
         int mid = (ss + (se - ss)/2);
-        updateValueUtil(arr, segmentTree, ss, mid, 2*si+1, index, value);
-        updateValueUtil(arr, segmentTree, mid+1, se, 2*si+2, index, value);
+        if(index >= ss && index <= mid)
+            updateValueUtil(arr, segmentTree, ss, mid, 2*si+1, index, value);
+        else
+            updateValueUtil(arr, segmentTree, mid+1, se, 2*si+2, index, value);
+
+        // storing the maximum at the parent node
+        segmentTree[si] = max(segmentTree[2*si+1], segmentTree[2*si+2]);
     }
 
     return ;
@@ -32,8 +50,6 @@ void updateValue(   vector<int> arr, vector<int> &segmentTree,
         return ;
     }
 
-    // int minVal =
-    arr[index] = value;
     updateValueUtil(arr, segmentTree, 0, n-1, 0, index, value);
 }
 
@@ -109,14 +125,14 @@ int main(){
 
     cout << minRangeQuery(arr, segmentTree, 3, 5) << endl;
 
-    // to disply segment tree before upadtion
+    // // to disply segment tree before upadtion
     // for(auto i:segmentTree)
     //     cout << i << ", ";
     // cout << endl;
 
     updateValue(arr, segmentTree, 2, 1);
 
-    // to disply segment tree after upadtion
+    // // to disply segment tree after upadtion
     // for(auto i:segmentTree)
     //     cout << i << ", ";
     // cout << endl;
