@@ -1,141 +1,143 @@
+// A Divide and Conquer Program to find maximum rectangular area in a histogram
 #include <bits/stdc++.h>
 using namespace std;
 
-// utility function to get the middle index from the corner indexes
-int getMid(int s, int e) { return s + (e - s)/2; }
+// A utility function to find minimum of three integers
+int max(int x, int y, int z)
+{ return max(max(x, y), z); }
 
-/*
-    recursive function to update the nodes which have the given index in their range
-    i --> index of the element to be updated
-    diff --> value to be added to all the nodes which have i in range
-*/
-void updateValueUtil(int *st, int ss, int se, int i, int diff, int si){
-    // base case : if input index lies outside the range of this segment
-    if(i < ss || i > se)
-        return ;
-
-    /* if the input index is in range of this node,
-    then update the value of the node and its childern */
-    st[si] = st[si] + diff;
-
-    // issme ye as a base condition, ki jb hm segment trees ke leaf nodes pr poch jayenge , tb aage recursion nhi krenge
-    if(se != ss){
-        int mid = getMid(ss, se);
-        updateValueUtil(st, ss, mid, i, diff, 2*si+1);
-        updateValueUtil(st, mid+1, se, i, diff, 2*si+2);
-    }
+// A utility function to get minimum of two numbers in hist[]
+int minVal(int *hist, int i, int j)
+{
+	if (i == -1) return j;
+	if (j == -1) return i;
+	return (hist[i] < hist[j])? i : j;
 }
 
-// update a value in input array and segment treee
-void updateValue(int arr[], int *st, int n, int i, int new_val){
-    // check for erroneous input index
-    if(i < 0 || i > n-1){
-        cout << "Invalid Input";
-        return ;
-    }
+// A utility function to get the middle index from corner indexes.
+int getMid(int s, int e)
+{ return s + (e -s)/2; }
 
-    // get the difference between new value and old value
-    int diff = new_val - arr[i];
+/* A recursive function to get the index of minimum value in a given range of
+	indexes. The following are parameters for this function.
 
-    // update the value in array
-    arr[i] = new_val;
+	hist --> Input array for which segment tree is built
+	st --> Pointer to segment tree
+	index --> Index of current node in the segment tree. Initially 0 is
+			passed as root is always at index 0
+	ss & se --> Starting and ending indexes of the segment represented by
+				current node, i.e., st[index]
+	qs & qe --> Starting and ending indexes of query range */
+int RMQUtil(int *hist, int *st, int ss, int se, int qs, int qe, int index)
+{
+	// If segment of this node is a part of given range, then return the
+	// min of the segment
+	if (qs <= ss && qe >= se)
+		return st[index];
 
-    // update the values of the nodes in the segment tree
-    updateValueUtil(st, 0, n-1, i, diff, 0);
+	// If segment of this node is outside the given range
+	if (se < qs || ss > qe)
+		return -1;
+
+	// If a part of this segment overlaps with the given range
+	int mid = getMid(ss, se);
+	return minVal(
+        hist,
+        RMQUtil(hist, st, ss, mid, qs, qe, 2*index+1),
+        RMQUtil(hist, st, mid+1, se, qs, qe, 2*index+2)
+    );
 }
 
-/*
-A recursive function to get the sum of values in the given range of the array. The following are parameters for this function
+// Return index of minimum element in range from index qs (quey start) to
+// qe (query end). It mainly uses RMQUtil()
+int RMQ(int *hist, int *st, int n, int qs, int qe){
+	// Check for erroneous input values
+	if (qs < 0 || qe > n-1 || qs > qe)
+	{
+		cout << "Invalid Input";
+		return -1;
+	}
 
-    st --> Pointer to segment tree
-    si --> Index of current node in the segment tree.
-        Initially 0 is pass as root is always at 0
-    ss & se --> starting and ending indexes of the segment
-        represented by current node, i.e. st[si]
-    qs & qe --> starting and ending indexes of query range
-*/
-int getSumUtil(int *st, int ss, int se, int qs, int qe, int si){
-    // if the given range fully overlaps the current range, then we add sum upto this range
-    if(qs <= ss && qe >= se)
-        return st[si];
-
-    // no overlaps btw the current range and given range
-    if(se < qs || ss > qe)
-        return 0;
-
-    // partial overlapping btw the given range and the current range
-    int mid = getMid(ss, se);
-    return (getSumUtil(st, ss, mid, qs, qe, 2*si+1) + getSumUtil(st, mid+1, se, qs, qe, 2*si+2));
+	return RMQUtil(hist, st, 0, n-1, qs, qe, 0);
 }
 
-//return sum of elements in range from index qs (query start) to qe (query end)
-int getSum(int *st, int n, int qs, int qe){
-    // check for erroneous input values
-    if(qs < 0 || qe > n-1){
-        cout << "Invalid Input";
-        return -1;
-    }
+// A recursive function that constructs Segment Tree for hist[ss..se].
+// si is index of current node in segment tree st
+int constructSTUtil(int hist[], int ss, int se, int *st, int si){
+	// If there is one element in array, store it in current node of
+	// segment tree and return
+	if (ss == se)
+	return (st[si] = ss);
 
-    return getSumUtil(st, 0, n-1, qs, qe, 0);
+	// If there are more than one elements, then recur for left and
+	// right subtrees and store the minimum of two values in this node
+	int mid = getMid(ss, se);
+	st[si] = minVal(
+        hist,
+        constructSTUtil(hist, ss, mid, st, si*2+1),
+		constructSTUtil(hist, mid+1, se, st, si*2+2)
+    );
+
+	return st[si];
 }
 
-// a recursive function that constructs segment Tree for array[ss...se].
-// si -- index of current node in segment tree
-// st -- pointer to segment tree
-int constructionSTUtil(int arr[], int ss, int se, int *st, int si){
-    // if there is one element in array, store it in the current node of segment tree and return
-    if(ss == se){
-        st[si] = arr[ss];
-        return arr[ss];
-    }
+/* Function to construct segment tree from given array. This function
+allocates memory for segment tree and calls constructSTUtil() to
+fill the allocated memory */
+int *constructST(int hist[], int n)
+{
+	// Allocate memory for segment tree
+	int x = (int)(ceil(log2(n))); //Height of segment tree
+	int max_size = 2*(int)pow(2, x) - 1; //Maximum size of segment tree
+	int *st = new int[max_size];
 
-    int mid = getMid(ss, se);
-    st[si] =    constructionSTUtil(arr, ss, mid, st, si*2+1) +
-                constructionSTUtil(arr, mid+1, se, st, si*2+2);
+	// Fill the allocated memory st
+	constructSTUtil(hist, 0, n-1, st, 0);
 
-    return st[si];
+	// Return the constructed segment tree
+	return st;
 }
 
-/*
-To construct segment tree from given array,
-This function allocates memory for segment tree
-and calls constructionsUTIL() to fill the allocated memory
-*/
-int  *constructionST(int arr[], int n){
-    //** allocate memory for the segment tree
+// A recursive function to find the maximum rectangular area.
+// It uses segment tree 'st' to find the minimum value in hist[l..r]
+int getMaxAreaRec(int *hist, int *st, int n, int l, int r)
+{
+	// Base cases
+	if (l > r) return INT_MIN;
+	if (l == r) return hist[l];
 
-    // height of the segment tree
-    int x = (int)(ceil(log2(n)));
+	// Find index of the minimum value in given range
+	// This takes O(Logn)time
+	int m = RMQ(hist, st, n, l, r);
 
-    // maximize size of segment tree
-    int maxSize = 2*(int)pow(2, x) - 1;
-
-    // allocate memory
-    int *st = new int[maxSize];
-
-    // fill the allocated memory st
-    constructionSTUtil(arr, 0, n-1, st, 0);
-
-    // return the constructed segment tree
-    return st;
+	/* Return maximum of following three possible cases
+	a) Maximum area in Left of min value (not including the min)
+	a) Maximum area in right of min value (not including the min)
+	c) Maximum area including min */
+	return max(
+        getMaxAreaRec(hist, st, n, l, m-1),
+		getMaxAreaRec(hist, st, n, m+1, r),
+		(r-l+1)*(hist[m])
+    );
 }
 
-// Driver function
-int main(){
-    int arr[] = {1, 3, 5, 7, 9, 11};
-    int n = sizeof(arr)/sizeof(arr[0]);
+// The main function to find max area
+int getMaxArea(int hist[], int n)
+{
+	// Build segment tree from given array. This takes
+	// O(n) time
+	int *st = constructST(hist, n);
 
-    // build segment tree from the given array
-    int *st = constructionST(arr, n);
+	// Use recursive utility function to find the
+	// maximum area
+	return getMaxAreaRec(hist, st, n, 0, n-1);
+}
 
-    // print the sum of values in array in the given range
-    cout << "Sum of values in the given range = " << getSum(st, n, 1, 3) << endl;
-
-    // update : set arr[i] = value, and update corresponding segment tree
-    updateValue(arr, st, n, 1, 10);
-
-    // find sum after the value is updated
-    cout << "Updated sum of values in given range = " << getSum(st, n, 1, 3) << endl;
-
-    return 0;
+// Driver program to test above functions
+int main()
+{
+	int hist[] = {6, 1, 5, 4, 5, 2, 6};
+	int n = sizeof(hist)/sizeof(hist[0]);
+	cout << "Maximum area is " << getMaxArea(hist, n);
+	return 0;
 }
