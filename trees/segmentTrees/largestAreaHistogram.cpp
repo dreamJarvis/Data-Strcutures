@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/largest-rectangle-in-histogram/
+// using segment Tree approach
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -127,7 +128,7 @@ int getMaxArea(int hist[], int n){
 
 // Driver function
 int main(){
-    int hist[] = {6, 1, 5, 4, 5, 2, 6};
+    int hist[] = {12, 3, 5, 7, 23, 11, 12, 6};
     int n = sizeof(hist)/sizeof(hist[0]);
 
     cout << "Maximum area : " << getMaxArea(hist, n) << endl;
