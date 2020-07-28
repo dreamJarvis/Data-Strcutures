@@ -1,4 +1,5 @@
-/* Queries for elements greater than K in the given index range using Segment Tree
+/*
+    Q) Queries for elements greater than K in the given index range using Segment Tree
 
     References :
 
@@ -9,7 +10,6 @@
 */
 #include <bits/stdc++.h>
 using namespace std;
-
 
 /*
     time taken to traverse the query range : O(log(n))
