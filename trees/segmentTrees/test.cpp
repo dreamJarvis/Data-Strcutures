@@ -1,10 +1,34 @@
-// Queries for elements greater than K in the given index range using Segment Tree
-// reference gfg : https://www.geeksforgeeks.org/queries-for-elements-greater-than-k-in-the-given-index-range-using-segment-tree/?ref=rp
+/* Queries for elements greater than K in the given index range using Segment Tree
+
+    References :
+
+    gfg : https://www.geeksforgeeks.org/queries-for-elements-greater-than-k-in-the-given-index-range-using-segment-tree/?ref=rp
+
+    array of vectors : https://www.geeksforgeeks.org/array-of-vectors-in-c-stl/
+
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
+
+/*
+    time taken to traverse the query range : O(log(n))
+    no of queries : q
+    time taken by binary search for each query : O(log(n))
+    total no of binary searches done : q*O(log(n))
+
+    total time Complexity : O(log(n)*(q*(log(n))))
+*/
+
 // ======== performing queries ========== //
 // performing queries on the qiven range
+/*
+    how do we find the no. of elements that are > k ?
+    so now when we have an sorted array for each range , and we want to find the no. of elements > k
+    so we can count it by looping it will take : O(n)
+    or we can use binary search to find the element just smaller that it,
+    so the difference btw its index and arr size will give us the count of total no of elements > k , tc : O(log(n))
+*/
 int query(vector<int> *tree, int index, int s, int e, int l, int r, int k){
     // out of bound
     if(r < s || l > e)
@@ -29,6 +53,7 @@ int query(vector<int> *tree, int index, int s, int e, int l, int r, int k){
 }
 
 // function to perform queries : UTILITY function
+// tc : O(q*log(n))
 void performQueries(vector<vector<int>> &q, vector<int> tree[], int n){
     for(auto i:q){
         cout << query(tree, 1, 0, n-1, i[0]-1, i[1]-1, i[2]) << endl;
@@ -73,6 +98,26 @@ vector<int> merge(vector<int> &v1, vector<int> &v2){
 
     so for each i'th index in the segment tree,
     it will store all the element that lies in the range that represent it
+
+    so how do we store it ?
+    now we know the nodes in the tree that is
+    height = 2 *( 2 * log(n)) - 1;
+
+    what we dont know is the no. of elements stored in each node
+
+    now if we take the nodes of the tree as row,
+    elements stored in each row as col's
+    then we can store the no. of elements for each node in it's i'th index in the segent tree
+
+    we can use array of vector
+    vector<int> arr[rowSize];
+
+    array of vectors is two dimensional array with fixed number of rows where each row is vector of variable length.
+    Each index of array stores a vector which can be traversed and accessed using iterators.
+
+    here each row is node in the segent tree, and the no. of elements are stored in the vetor at each arrays index
+
+    tc : O(log(n))
 */
 void buildTree(vector<int> *tree, vector<int> &arr, int index, int s, int e){
     if(s == e){
@@ -97,7 +142,9 @@ int main(){
     });
 
     int n = arr.size();
-    vector<int> tree[4*n+1];            // segment tree
+
+    // Segment Tree :
+    vector<int> tree[4*n+1];            // array of vectors
 
     // consturct a segment Tree
     buildTree(tree, arr, 1, 0, n-1);
