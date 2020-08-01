@@ -37,27 +37,28 @@ int removeDuplicates(vector<int> &nums){
 // light-weight solution
 // t : O(n)
 // s : O(1)
-int removeDuplicates_2(vector<int> &arr){
-    int index = 0;
+int removeDuplicatesII(vector<int>& nums) {
+    int n = nums.size();
 
-    // hm yaha pr hr value pr iterate kra rhe h
-    for(auto value:arr){
-        // 2 conditions lagyenge
-        // 1st : 0th index ki value ussi ki place pr save kr denge
-        /* 2nd : kyuki given array sorted h, agar hm ith index pr h, aor isski repeateed values h toh ye toh pkka h ki wo continuity me rhenge
-        mtlb, hm array ko traverse krte jayenge aor jb hme ith value se bdi value milegi, toh hm usse ith ki next index pr insert kr denge, kyuki agr ith ki values repeating h, toh woh obviously next index pr he hongi( continuity me )
-        hm yhi technique hr value ke liye lgayenge
-        */
-        if(index < 1 || arr[index - 1] < num){
-            arr[index] = num;
-            index++;
+    int j = 0;
+    for(int i = 1; i < n; i++){
+        if(nums[j] != nums[i]){
+            nums[j+1] = nums[i];
+            j++;
         }
     }
+
+    return (j+1);
 }
 
 // Driver function
 int main(){
     vector<int> arr({1});
-    cout << "\n" << removeDuplicates(arr) << endl;
+    // vector<int> arr({1, 1});
+    // vector<int> arr({1, 1, 2});
+    // vector<int> arr({0,0,1,1,1,2,2,3,3,4});
+
+    cout << "\n" << removeDuplicatesII(arr) << endl;
+
     return 0;
 }
