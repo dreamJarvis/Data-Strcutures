@@ -38,8 +38,9 @@ int largestRectangleArea(vector<int>& arr) {
 
     largestArea = max(largestArea, arr[s.top()]);
     int i = s.top();
+    s.pop();
     while(!s.empty()){
-        
+        int area = arr[s.top()]*();
     }
 
     return largestArea;
