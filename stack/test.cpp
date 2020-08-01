@@ -2,10 +2,12 @@
 using namespace std;
 
 int main(){
-    string str = "tarun";
-    swap(str[1], str[3]);
+    set<int, greater<>> s;
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
 
-    cout << str << endl;
+    cout << *(s.begin()) << endl;
 
     return 0;
 }
