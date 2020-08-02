@@ -2,54 +2,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(n)
 int largestRectangleArea(vector<int>& arr) {
     int n = arr.size();
-
     stack<int> s;
-    int largestArea = 0;
+    int maxHistogramArea = 0;
+    int i = 0;
 
-    for(int i = 0; i < n; i++){
-
-        while(!s.empty() && arr[i] <= arr[s.top()] ){
-
-            cout << s.top() << "__" << arr[s.top()] << " __ " << i << endl;
-
+    for(; i < n; i++){
+        while(!s.empty() && arr[s.top()] > arr[i]){
             int tp = s.top();
             s.pop();
 
-            int area = 0;
-            if(s.empty()){
-                area = arr[i]*(i+1);
-                // cout << area << endl;
-            }
-            else{
-                area = arr[s.top()] * (i - tp + 1);
-            }
-
-            cout << area << endl;
-            // cout << i << " -- " << s.top() << endl;
-
-            largestArea = max(largestArea, area);
+            int area = arr[tp] * (s.empty() ? i : (i - s.top() - 1));
+            maxHistogramArea = max(maxHistogramArea, area);
         }
 
-        // cout << i << endl;
         s.push(i);
     }
 
-    largestArea = max(largestArea, arr[s.top()]);
-    int i = s.top();
-    s.pop();
     while(!s.empty()){
-        int area = arr[s.top()]*();
+        int tp = s.top();
+        s.pop();
+
+        int area = arr[tp] * (s.empty() ? i : (i - s.top() - 1));
+        maxHistogramArea = max(maxHistogramArea, area);
     }
 
-    return largestArea;
+    return maxHistogramArea;
 }
 
 // Driver function
 int main(){
     // vector<int> arr({2, 1, 5, 6, 2, 3});
     // vector<int> arr({1, 1});
+    // vector<int> arr({1});
+    // vector<int> arr({9, 0});
     vector<int> arr({2, 4});
 
     cout << largestRectangleArea(arr) << endl;
