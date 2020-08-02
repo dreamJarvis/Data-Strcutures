@@ -2,12 +2,7 @@
 using namespace std;
 
 int main(){
-    set<int, greater<>> s;
-    s.insert(1);
-    s.insert(2);
-    s.insert(3);
-
-    cout << *(s.begin()) << endl;
+    cout << '1' - '0' << endl;
 
     return 0;
 }
