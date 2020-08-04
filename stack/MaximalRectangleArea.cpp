@@ -66,6 +66,7 @@ int maximalRectangle(vector<vector<char>>& arr) {
 
 // using kadanes algo
 
+
 // Driver function
 int main(){
     vector<vector<char>> arr({
