@@ -25,11 +25,17 @@ Node *constructTree(    string inorder, string preorder,
     if(start > end)
         return nullptr;
 
-    Node *newNode = new Node(preorder[preIndex]);
-    int index = map[preorder[preIndex++]];
+    Node *newNode = new Node(preorder[preIndex++]);               // root
+    int key = newNode->key;
 
-    newNode->left = constructTree(inorder, preorder, map, start, index-1);
-    newNode->right = constructTree(inorder, preorder, map, index+1, end);
+    // if the node has no children
+    if(start == end)
+        return newNode;
+
+    int index = map[key];
+
+    newNode->left = constructTree(inorder, preorder, map, start, index-1);      // left
+    newNode->right = constructTree(inorder, preorder, map, index+1, end);       // right
 
     return newNode;
 }
