@@ -20,14 +20,15 @@ Node *constructTree(    vector<int> preorder, vector<int> postorder,
 ){
     static int preIndex = 0;            // pointing to the next root
 
-    if(preIndex >= preorder.size()-1 || start > end)    return nullptr;
+    if(preIndex > preorder.size()-1 || start > end)    return nullptr;
 
-    Node *currRoot = new Node(preorder[preIndex++]);                // root
+    Node *currRoot = new Node(preorder[preIndex++]);
 
     if(start == end)    return currRoot;
 
     int index = map[preorder[preIndex]];
 
+    // the next root, should lie within the index of the previous range
     if(index <= end){
         currRoot->left = constructTree(preorder, postorder, map, start, index);     // left
         currRoot->right = constructTree(preorder, postorder, map, index+1, end);    // right
