@@ -1,10 +1,11 @@
 /*
-    To find the height of tree
+    Print level order traversal line by line | Set 1
+    https://www.geeksforgeeks.org/print-level-order-traversal-line-line/
 */
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Node{
+struct Node {
     int key;
     Node *left, *right;
 
@@ -14,16 +15,7 @@ struct Node{
     }
 };
 
-int heightOfTree(Node *root){
-    if(!root)   return -1;
 
-    return (
-        max(
-            heightOfTree(root->left),
-            heightOfTree(root->right)
-        ) + 1
-    );
-}
 
 // Driver function
 int main(){
@@ -32,9 +24,7 @@ int main(){
     root->right = new Node(3);
     root->left->left = new Node(4);
     root->left->right = new Node(5);
-    root->left->right->right = new Node(15);
-
-    cout << "Height : " << heightOfTree(root) << endl;
+    root->right->right = new Node(6);
 
     return 0;
 }

@@ -11,54 +11,81 @@ struct Node{
     }
 };
 
-Node *constructTree(    vector<int> pre, vector<int> post,
-                        unordered_map<int, int> &map, int start, int end
-){
-    static int preIndex = 0;
+void nodesAtKDistance(Node *root, int k, vector<int> &result){
+    static int lvl = -1;
 
-    if(preIndex > pre.size()-1 || start > end)
-        return nullptr;
+    if(!root)   return ;
 
-    Node *currRoot = new Node( pre[preIndex++] );
+    lvl++;
+    nodesAtKDistance(root->left, k, result);
 
-    if(start == end)    return currRoot;
+    cout << root->key << " --- " << lvl << endl;
+    if(lvl == k)
+        result.push_back(root->key);
 
-    int index = map[pre[preIndex]];
-
-    if(index <= end){
-        currRoot->left = constructTree(pre, post, map, start, index);
-        currRoot->right = constructTree(pre, post, map, index+1, end);
-    }
-
-    return currRoot;
+    nodesAtKDistance(root->right, k, result);
+    lvl--;
 }
 
-Node *constructTreeUTIL(vector<int> pre, vector<int> post){
-    int n = pre.size();
-    unordered_map<int, int> map;
+vector<int> nodesAtKDistanceUtil(Node *root, Node *target, int k, int heightOfTarget){
+    vector<int> result;
 
-    for(int i = 0; i < n; i++)
-        map[post[i]] = i;
+    // nodesAtKDistance(target, k, result);
 
-    return constructTree(pre, post, map, 0, n-1);
+    int rightSubstree = abs(k-heightOfTarget);
+    cout << rightSubstree << endl;
+
+    Node *temp = root->left;
+    nodesAtKDistance(temp, rightSubstree, result);
+
+    return result;
+}
+
+int heightOfTarget(Node *root, Node *target){
+    if(!root)   return -1;
+    if(root == target)  return 0;
+    return (
+        max(
+            heightOfTarget(root->left, target),
+            heightOfTarget(root->right, target)
+        ) + 1
+    );
 }
 
 void inorderTraversal(Node *root){
-    if(!root)   return ;
+    if(!root)   return;
 
     inorderTraversal(root->left);
     cout << root->key << " ";
     inorderTraversal(root->right);
 }
 
+
 // Driver function
 int main(){
-    vector<int> pre({1, 2, 4, 8, 9, 5, 3, 6, 7});
-    vector<int> post({8, 9, 4, 5, 2, 6, 7, 3, 1});
+    Node * root = new Node(20);
+    root->left = new Node(8);
+    root->right = new Node(22);
+    root->left->left = new Node(4);
+    root->left->right = new Node(12);
+    root->left->right->left = new Node(10);
+    root->left->right->right = new Node(14);
 
-    Node *root = constructTreeUTIL(pre, post);
+    // Node *root = new Node(0);
+    // root->left = new Node(1);
+    // root->right = new Node(3);
+    // root->left->right = new Node(2);
+    // root->right->right->left = new Node(4);
 
-    inorderTraversal(root);
+    Node * target = root->left->right;
+    int distance = 2;
+
+    int hot = heightOfTarget(root, target);
+    cout << target->key<< " - " << hot << endl;
+
+    for(auto i:nodesAtKDistanceUtil(root, target, distance+1, hot))
+        cout << i << " ";
+    cout << endl;
 
     return 0;
 }
