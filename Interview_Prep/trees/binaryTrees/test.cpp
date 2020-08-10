@@ -1,115 +1,74 @@
-// print Nodes at K distance
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Node{
-    int key;
-    Node *left, *right;
-
-    Node(int x){
-        key = x;
-        left = right = nullptr;
+int ArrayChallenge(int arr[], int arrLength) {
+  // unordered_map<int, int> map;
+  // unordered_map<int, bool> visited;
+  // for(int i = 0; i < arrLength; i++){
+  //   if(i+1 != arr[i]){
+  //     map[i+1] = arr[i];
+  //   }
+  // }
+  //
+  // int swaps = 0;
+  // for(int i = 0; i < arrLength; i++){
+  //     int len=0;
+  //     int val = arr[i]-1;
+  //     int index = i;
+  //     // cout << "v : " << val << endl;
+  //     if(i+1  != arr[i]){
+  //         while(!visited.count(val)){
+  //             visited[val] = true;
+  //           visited[index] = true;
+  //           index = val;
+  //           val = arr[arr[val]-1]-1;
+  //           // cout << "val : " << val << endl;
+  //           len++;
+  //         }
+  //         // cout << len << endl;
+  //     }
+  //
+  //     if(len)
+  //         swaps += len;
+  // }
+  //
+  // return swaps;
+  unordered_map<int, int> map;
+  unordered_map<int, bool> visited;
+  for(int i = 0; i < arrLength; i++){
+    if(i+1 != arr[i]){
+      map[i+1] = arr[i];
     }
-};
+  }
 
-// O(n)
-// values at the distance
-void printkdistanceNode(map<int, list<Node *>> &nodesLvl, int targetLvl, int distance){
-    if(targetLvl+distance < nodesLvl.size()){
-        auto a = nodesLvl.find(targetLvl+distance);
+  int swaps = 0;
+  for(int i = 0; i < arrLength; i++){
+    int len = 0;
+    int val = arr[i]-1;
+    int index = i;
 
-        cout << "dist : " << targetLvl+distance << endl;
-        for(auto i:a->second)
-            cout << i->key << " ";
+    if(i+1 != arr[i]){
+      while(!visited.count(val)){
+        visited[index] = true;
+        visited[val] = true;
+
+        index = val;
+        val = arr[arr[val]-1]-1;
+        len++;
+      }
     }
 
-    if(abs(distance-targetLvl)  < nodesLvl.size()){
-        cout << "dist : " << targetLvl+distance << endl;
+    if(len) swaps += len;
+  }
 
-        auto b = nodesLvl.find(abs(distance-targetLvl));
-        for(auto i:b->second)
-            cout << i->key << " ";
-    }
-
-    return ;
+  return swaps;
 }
 
-// O(n)
-// pushing value accoring to their level using oreorder traversal
-void nodesAtLevel(Node *root, map<int, list<Node *>> &nodesLvl, Node *target, int &targetLvl){
-    static int lvl = -1;
-
-    if(!root)   return ;
-
-    lvl++;
-    nodesAtLevel(root->left, nodesLvl, target, targetLvl);
-
-    // if it's not root, then push it
-    if(root != target){
-        if(nodesLvl.count(lvl)){
-            auto f = nodesLvl.find(lvl);
-            f->second.push_back(root);
-        }
-        else{
-            list<Node *> lst;
-            lst.push_back(root);
-            nodesLvl.insert(make_pair(lvl, lst));
-        }
-    }
-    else if(root == target){
-        targetLvl = lvl;
-    }
-
-    nodesAtLevel(root->right, nodesLvl, target, targetLvl);
-    lvl--;
-}
-
-void inorderTraversal(Node *root){
-    if(!root)   return;
-
-    inorderTraversal(root->left);
-    cout << root->key << " ";
-    inorderTraversal(root->right);
-}
-
-// Driver function
-int main(){
-    // Node * root = new Node(20);
-    // root->left = new Node(8);
-    // root->right = new Node(22);
-    // root->left->left = new Node(4);
-    // root->left->right = new Node(12);
-    // root->left->right->left = new Node(10);
-    // root->left->right->right = new Node(14);
-
-    Node *root = new Node(0);
-    root->left = new Node(1);
-    root->right = new Node(3);
-    root->left->right = new Node(2);
-    // root->right->right->left = new Node(4);
-
-    inorderTraversal(root);
-    cout << "\n\n";
-
-    // Node * target = root->left->right;
-    Node * target = root->left;
-    int distance = 2;
-
-
-    map<int, list<Node *>> nodesLvl;
-    int targetLvl = -1;
-
-    nodesAtLevel(root, nodesLvl, target, targetLvl);
-
-    for(auto i:nodesLvl){
-        cout << i.first << " : ";
-        for(auto j:i.second)
-            cout << j->key << ", ";
-        cout << endl;
-    }
-
-    cout << "nodes : ";
-    printkdistanceNode(nodesLvl, targetLvl, distance);
-
+int main(void) {
+    // int A[] = {1, 3, 2};
+    // int A[] = {3,1,2};
+    int A[] = {1,3,4,2};
+    int arrLength = sizeof(A) / sizeof(*A);
+    cout << ArrayChallenge(A, arrLength);
     return 0;
 }

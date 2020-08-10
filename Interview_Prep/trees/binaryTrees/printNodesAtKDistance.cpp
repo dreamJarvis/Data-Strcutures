@@ -90,36 +90,53 @@ vector<int> distanceKII(TreeNode* root, TreeNode* target, int K) {
 //===============================  DFS Approach ====================== //
 // tc : O(n), nodes
 // sc : O(1)
+// recursive function to print all the nodes at distance K in the tree, rooted woth given root
 void nodesAtKthDistanceDown(TreeNode *root, int k, vector<int> &result){
     if(root == nullptr || k < 0)    return ;
 
-    if(k == 0)
+    if(k == 0){
         result.push_back(root->val);
+        return ;
+    }
 
+    // recur for left & right-subtrees
     nodesAtKthDistanceDown(root->left, k-1, result);
     nodesAtKthDistanceDown(root->right, k-1, result);
 }
 
 int nodesAtKthDistance(TreeNode *root, TreeNode *target, int k, vector<int> &result){
+    // if tree is empty, return null
     if(root == nullptr)    return -1;
 
+    // if target is same as root, use downward function to print al nodes at distance k in subtree rooted with target or root
     if(root == target){
         nodesAtKthDistanceDown(root, k, result);
         return 0;
     }
 
+    // recur for the left sub-tree
+    // because we recur by passing the root->left in the recuring function, .'. the distance will be
+    // root's left child distance from the target
     int leftDistance = nodesAtKthDistance(root->left, target, k, result);
 
+    // check if target node was found in left sub-tree
     if(leftDistance != -1){
+        // if the root is at distanve k from the target, print rooted
+        // leftDistance is distance of root's left child from target
         if(leftDistance + 1 == k)
             result.push_back(root->val);
+
+        // else go to right sub-tree and print all the k-leftDistance-2 distant nodes
+        // the right-child is 2 edges away from the root
         else
             nodesAtKthDistanceDown(root->right, k-leftDistance-2, result);
 
-
+        // add 1 to the distance and return value for parent calls
         return (leftDistance+1);
     }
 
+    //------- mirror of the code above ------- //
+    // we reach here only when the node was not found in the left sub-tree
     int rightDistance = nodesAtKthDistance(root->right, target, k, result);
     if(rightDistance != -1){
         if(rightDistance + 1 == k)
@@ -130,6 +147,7 @@ int nodesAtKthDistance(TreeNode *root, TreeNode *target, int k, vector<int> &res
         return (rightDistance+1);
     }
 
+    // if target was neither found in left/right sub-tree return -1
     return -1;
 }
 
