@@ -35,7 +35,7 @@ void allPossibleSubset(int arr[],int n){
 }
 
 int main(){
-	int arr[] = {1, 2, 3};
+	int arr[] = {1, 2};
 	int n = sizeof(arr)/sizeof(arr[0]);
 
 	allPossibleSubset(arr,n);

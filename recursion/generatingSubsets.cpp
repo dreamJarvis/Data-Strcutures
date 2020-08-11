@@ -28,7 +28,7 @@ void generatingSubsets(int arr[], int n, int start, int end){
 
 // Driver function
 int main(){
-    int arr[] = {1, 2, 7, 4, 6, 8, 13};
+    int arr[] = {1, 2};
     int n = sizeof(arr)/sizeof(arr[0]);
 
     generatingSubsets(arr, n, 0, 0);
