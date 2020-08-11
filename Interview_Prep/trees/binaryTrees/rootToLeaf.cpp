@@ -1,3 +1,7 @@
+/*
+    Given a binary tree, print all root-to-leaf paths
+    https://www.geeksforgeeks.org/given-a-binary-tree-print-all-root-to-leaf-paths/
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -24,7 +28,8 @@ void rootToLeaf(TreeNode *root, string ans){
     rootToLeaf(root->right, ans);
 }
 
-int main(void) {
+// Driver function
+int main() {
     TreeNode *root = new TreeNode(10);
     root->left = new TreeNode(8);
     root->right = new TreeNode(2);
