@@ -5,17 +5,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Node{
-    int key;
-    Node *left, *right;
+// tree node
+struct TreeNode{
+    int val;
+    TreeNode *left, *right;
 
-    Node(int x){
-        key = x;
+    TreeNode(int x){
+        val = x;
         left = right = nullptr;
     }
 };
 
+// dll node
+struct Node{
+    int key;
+    Node *next, *prev;
 
+    Node(int x){
+        key = x;
+        next = prev = nullptr;
+    }
+};
+
+TreeNode *treeToDll(TreeNode *root, Node *head){
+    if(!root)
+        return nullptr;
+
+    Node *newNode = new Node(root->key);
+
+    newNode->prev = treeToDll(root->left);
+    Node *temp = treeToDll(root->right);
+    temp->next = newNode;
+
+    return newNode;
+}
 
 // Driver function
 int main(){
