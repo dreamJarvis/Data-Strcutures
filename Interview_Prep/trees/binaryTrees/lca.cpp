@@ -15,7 +15,26 @@ struct TreeNode{
     }
 };
 
+TreeNode *lca(TreeNode *root, TreeNode *n1, TreeNode *n2){
+    if(!root || !root->left && !root->right)
+        return nullptr;
 
+    if( root == n1 || root == n2)
+        return root;
+
+    cout << root->val << endl;
+
+    TreeNode *leftSubTree = lca(root->left, n1, n2);
+    TreeNode *rightSubTree = lca(root->right, n1, n2);
+
+    cout << leftSubTree->val << ", " << rightSubTree->val << endl;
+
+    if( leftSubTree == n1 && rightSubTree == n2 ||
+        leftSubTree == n2 && rightSubTree == n1 )
+        return root;
+
+    return (!leftSubTree ? rightSubTree : leftSubTree);
+}
 
 // Driver function
 int main(){
