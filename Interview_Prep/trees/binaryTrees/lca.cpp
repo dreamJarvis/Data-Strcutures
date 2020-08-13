@@ -15,22 +15,7 @@ struct TreeNode{
     }
 };
 
-TreeNode *lca(TreeNode *root, TreeNode *node1, TreeNode *node2){
-    if(!root)   return nullptr;
 
-    if( root->left == node1 || root->right == node1 ||
-        root->left == node2 || root->right == node2
-        ){
-        return root;
-    }
-
-    TreeNode *leftSubtree = lca(root->left, node1, node2);
-    TreeNode *rightSubtree = lca(root->right, node1, node2);
-
-    if(leftSubtree && rightSubtree)
-        return root;
-    return (!leftSubtree ? leftSubtree : rightSubtree);
-}
 
 // Driver function
 int main(){
