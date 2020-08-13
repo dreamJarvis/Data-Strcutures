@@ -15,19 +15,15 @@ struct TreeNode{
     }
 };
 
+// tc : O(n)
 TreeNode *lca(TreeNode *root, TreeNode *n1, TreeNode *n2){
-    if(!root || !root->left && !root->right)
-        return nullptr;
+    if(!root)   return nullptr;
 
     if( root == n1 || root == n2)
         return root;
 
-    cout << root->val << endl;
-
     TreeNode *leftSubTree = lca(root->left, n1, n2);
     TreeNode *rightSubTree = lca(root->right, n1, n2);
-
-    cout << leftSubTree->val << ", " << rightSubTree->val << endl;
 
     if( leftSubTree == n1 && rightSubTree == n2 ||
         leftSubTree == n2 && rightSubTree == n1 )
@@ -47,7 +43,7 @@ int main(){
     root->right->right = new TreeNode(6);
 
     TreeNode *node1 = root->left->left;
-    TreeNode *node2 = root->left->right;
+    TreeNode *node2 = root->right->right;
 
     cout << lca(root, node1, node2)->val << endl;
 
