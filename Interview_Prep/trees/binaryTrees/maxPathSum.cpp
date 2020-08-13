@@ -15,24 +15,30 @@ struct TreeNode{
 };
 
 // O(n)
-int maxSum(TreeNode *root, int &res){
-    if(!root)   return 0;
+int maxPathSumUtil(TreeNode *root, int &maxSum){
+    if(!root)
+        return INT_MIN;
 
-    int l = maxSum(root->left, res);
-    int r = maxSum(root->right, res);
+    int leftSubtreeMax = maxPathSumUtil(root->left, maxSum);
+    int rightSubtreeMax = maxPathSumUtil(root->right, maxSum);
 
-    int withoutChid = max(max(l, r)+root->val, root->val);
-    int withChild = max(l+r+root->val, withoutChid);
-    res = max(res, withChild);
+    int ifPathContinues = max(
+                            max(leftSubtreeMax, rightSubtreeMax) + root->val,
+                            root->val
+                        );
+    int ifPathDoesntContinue = max(
+                                leftSubtreeMax + rightSubtreeMax + root->val,
+                                ifPathContinues
+                            );
+    maxSum = max(maxSum, ifPathDoesntContinue);
 
-    return withoutChid;
+    return ifPathContinues;
 }
 
-int maxPathSum(TreeNode* root) {
-    int res = INT_MIN;
-    maxSum(root, res);
-
-    return res;
+int maxPathSum(TreeNode *root){
+    int maxSum = INT_MIN;
+    maxPathSumUtil(root, maxSum);
+    return maxSum;
 }
 
 // Driver function

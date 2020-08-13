@@ -11,28 +11,15 @@ struct TreeNode{
     }
 };
 
-// tc : O(n)
-void rootToLeaf(TreeNode *root, string ans){
-    if(!root->left && !root->right){
-        ans += to_string(root->val);
-        cout << ans << endl;
-        return;
-    }
-
-    ans+=(to_string(root->val) + "-->");
-    rootToLeaf(root->left, ans);
-    rootToLeaf(root->right, ans);
-}
 
 int main(void) {
-    TreeNode *root = new TreeNode(10);
-    root->left = new TreeNode(8);
-    root->right = new TreeNode(2);
-    root->left->left = new TreeNode(3);
-    root->left->right = new TreeNode(5);
-    root->right->left = new TreeNode(2);
+    TreeNode *root = new TreeNode(-10);
+    root->left = new TreeNode(9);
+    root->right = new TreeNode(20);
+    root->right->left = new TreeNode(15);
+    root->right->right= new TreeNode(7);
 
-    rootToLeaf(root, "");
+    cout << maxPathSum(root) << endl;
 
     return 0;
 }
