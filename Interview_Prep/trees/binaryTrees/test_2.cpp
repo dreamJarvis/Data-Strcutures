@@ -1,26 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void reverseStack(stack<int> &a, stack<int> &b){
+void reverseStack(stack<int> a, multiset<int> &st){
     if(a.empty())   return;
-    b.push(a.top());
+
+    st.insert(a.top());
     a.pop();
-    reverseStack(a, b);
+
+    reverseStack(a, st);
 }
 
 int main(){
-    stack<int> a, b;
+    stack<int> a;
+    multiset<int> st;
 
-    a.push(1);
-    a.push(2);
-    a.push(3);
+    a.push(10);
+    a.push(23);
+    a.push(7);
     a.push(4);
-    a.push(5);
+    a.push(12);
+    a.push(1);
 
-    reverseStack(a, b);
+    reverseStack(a, st);
 
-    while(!b.empty()){
-        cout << b.top() << " ";
-        b.pop();
-    }
+    for(auto i:st)
+        cout << i << " ";
+    return 0;
 }

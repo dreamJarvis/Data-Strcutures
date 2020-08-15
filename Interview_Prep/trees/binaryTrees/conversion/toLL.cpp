@@ -18,48 +18,59 @@ struct TreeNode{
     }
 };
 
-void flattenLeftSide(TreeNode *root){
-    if(!root)   return;
-    static TreeNode *prev = nullptr;
-    if(root){
-        flattenLeftSide(root->left);
-        root->left = prev;
-        prev = root;
-        flattenLeftSide(root->right);
+// tc : O(n)
+void flatten(TreeNode *root){
+    if(!root || !root->left && !root->right)
+        return;
+
+    if(root->left != nullptr){
+        flatten(root->left);
+
+        TreeNode *tmpRight = root->right;
+        root->right = root->left;
+        root->left = nullptr;
+
+        TreeNode *t = root->right;
+        while(t->right != nullptr)
+            t = t->right;
+
+        t->right = tmpRight;
     }
+
+    flatten(root->right);
 }
 
-TreeNode *flattenTree(TreeNode *root){
-    flattenLeftSide(root);
+void inorderTraversal(TreeNode *head){
+    if(!head)   return;
 
-    while(root && root->right)
-        root = root->right;
-
-    TreeNode *pre = nullptr;
-    while(root && root->left){
-        root->right = prev;
-        
-    }
+    inorderTraversal(head->left);
+    cout << head->val << " ";
+    inorderTraversal(head->right);
 }
-
-// void printList(TreeNode *head){
-//     while(head){
-//         cout << head->val << " ";
-//         head = head->left;
-//     }
-// }
 
 // Driver function
 int main(){
-    TreeNode *root = new TreeNode(10);
-	root->left = new TreeNode(12);
-	root->right = new TreeNode(15);
-	root->left->left = new TreeNode(25);
-	root->left->right = new TreeNode(30);
-	root->right->left = new TreeNode(36);
+    TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(5);
+    root->left->left = new TreeNode(3);
+    root->left->right = new TreeNode(4);
+    root->right->right = new TreeNode(6);
 
-    flattenTree(root);
-    // printList(head);
+
+    // inorderTraversal(root);
+    // cout << "\n";
+
+
+    flatten(root);
+
+    // right traversal
+    while(root){
+        cout << root->val << " ";
+        root = root->right;
+    }
+
+    // inorderTraversal(root);
 
     return 0;
 }
