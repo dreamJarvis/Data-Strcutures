@@ -13,28 +13,6 @@ struct TreeNode{
     }
 };
 
-void btToDllUtil(TreeNode *root, TreeNode **head){
-    if(!root) return;
-
-    btToDllUtil(root->right, head);
-
-    root->right = (*head);
-
-    if(*head)
-        (*head)->left = root;
-    (*head) = root;
-
-    btToDllUtil(root->left, head);
-}
-
-TreeNode *btToDll(TreeNode *root){
-    if(!root)   return nullptr;
-
-    TreeNode *head = nullptr;
-    btToDllUtil(root, &head);
-
-    return head;
-}
 
 
 void printList(TreeNode *head){
