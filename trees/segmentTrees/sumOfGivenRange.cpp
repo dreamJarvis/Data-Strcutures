@@ -107,15 +107,16 @@ void SumOfGivenRangeII::display(){
 // tc for sum of range    : O(lon(n))
 // tc for updated         : O(lon(n))
 class SumOfGivenRangeIII{
+    int n;
     vector<int> originalArr;
     vector<int> segmentTree;
-    int n;
 public:
     // contruction of segment tree
     SumOfGivenRangeIII(vector<int> arr){
         this->originalArr = arr;
         this->n = arr.size();
 
+        // calculating the size of segment tree
         int height = (int)(ceil(log2(n)));
         int treeSize = 2*(int)pow(2, height) - 1;
 
@@ -142,20 +143,15 @@ public:
 
 // constucts the segmented tree
 int SumOfGivenRangeIII::constructBT(int ss, int se, int si){
+    // when we reach the end of the tree, we start insertign elements to the leaf nodes
     if(ss == se){
         segmentTree[si] = originalArr[ss];
-
-        // cout << "das" << endl;
-
         return originalArr[ss];
     }
-
-    // cout << "hello" << endl;
 
     int mid = (ss + (se - ss)/2 );
     segmentTree[si] = constructBT(ss, mid, 2*si+1) + constructBT(mid+1, se, 2*si+2);
 
-    // cout << "hello" << endl;
     return segmentTree[si];
 }
 
@@ -192,7 +188,7 @@ void SumOfGivenRangeIII::updateValueUtil(int ss, int se, int si, int index, int 
     if(index < ss || index > se)
         return ;
 
-    // add the difference to all those values whcih lies in the range if index
+    // add the difference to all those values whcih lies in the range of index
     segmentTree[si] += diff;
     if(ss != se){
         int mid = (ss + (se - ss)/2);

@@ -57,8 +57,10 @@ void inorderTraversal(Node *head){
 
 // Driver function
 int main(){
-    vector<int> preorder({1, 2, 4, 8, 9, 5, 3, 6, 7});
-    vector<int> postorder({8, 9, 4, 5, 2, 6, 7, 3, 1});
+    // vector<int> preorder({1, 2, 4, 8, 9, 5, 3, 6, 7});
+    // vector<int> postorder({8, 9, 4, 5, 2, 6, 7, 3, 1});
+    vector<int> preorder({20, 15, 10, 5, 12, 18, 25, 2\4, 30});
+    vector<int> postorder({5, 12, 10, 18, 15, 24, 30, 25, 20});
 
     Node *root = constructTreeUTIL(preorder, postorder);
 
