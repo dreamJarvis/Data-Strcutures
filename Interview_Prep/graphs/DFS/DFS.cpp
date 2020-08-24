@@ -45,7 +45,7 @@ using namespace std;
 //     DFSUtil(v, visited);
 // }
 
-// For disconnected graphs
+// For connected and disconnected graphs
 class Graph{
     int V;
     list<int> *adj;
@@ -71,6 +71,7 @@ void Graph::DFSUtil(int v, bool visited[]){
     }
 }
 
+// tc : O(V+E)
 void Graph::DFS(){
     bool visited[V] = {false};
 
