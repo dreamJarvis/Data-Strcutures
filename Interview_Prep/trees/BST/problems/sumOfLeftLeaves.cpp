@@ -36,7 +36,9 @@ public:
 // DFS
 class SolutionII {
 public:
-
+    int sumOfLeftLeaves(TreeNode* root) {
+        
+    }
 };
 
 // Driver function
@@ -47,7 +49,7 @@ int main(){
     root->right->left = new TreeNode(15);
     root->right->right = new TreeNode(7);
 
-    Solution s;
+    SolutionII s;
     cout << s.sumOfLeftLeaves(root) << endl;
 
     return 0;
