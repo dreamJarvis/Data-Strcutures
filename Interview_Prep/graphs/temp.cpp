@@ -1,72 +1,58 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <climits>
+#include <vector>
 using namespace std;
 
 #define INF INT_MAX
-typedef pair<int, int> iPair;
+#define NINF INT_MIN
 
-class Graph{
-    int V;
-    list<iPair> *adj;
-public:
-    Graph(int V) : V(V), adj(new list<iPair>[V]) {}
-    void addEdge(int u, int v, int w);
-    void shortestPath(int src);
-};
-
-void Graph::addEdge(int u, int v, int w){
-    adj[u].push_back({v, w});
-    adj[v].push_back({u, w});
-}
-
-void Graph::shortestPath(int src){
-    priority_queue<iPair, vector<iPair>, greater<iPair>> pq;
+void bellmanFord(int graph[][3], int V, int E, int src){
     vector<int> dist(V, INF);
-
-    pq.push({0, src});
     dist[src] = 0;
 
-    while(!pq.empty()){
-        int u = pq.top().second;
-        pq.pop();
+    for(int i = 0; i < V-1; i++){
+        for(int j = 0; j < E; j++){
+            int u = graph[j][0];
+            int v = graph[j][1];
+            int weight = graph[j][2];
 
-        for(auto i:adj[u]){
-            int v = i.first;
-            int weight = i.second;
             if(dist[v] > dist[u] + weight){
                 dist[v] = dist[u] + weight;
-                pq.push({dist[v], v});
             }
         }
     }
 
-    cout << "vector \tDistance from source node\n";
-    for(int i = 0; i < V; i++)
-        cout << " " << i << "\t\t" << dist[i] << endl;
+    for(int i = 0; i < V-1; i++){
+        for(int j = 0; j < E; j++){
+            int u = graph[j][0];
+            int v = graph[j][1];
+            int weight = graph[j][2];
+
+            if(dist[v] > dist[u] + weight){
+                dist[v] = NINF;
+            }
+        }
+    }
+
+    for(int i = 0; i < V; i++){
+        cout << i << "\t" << dist[i] << endl;
+    }
 }
 
 // Driver function
 int main(){
-    // create the graph given in above fugure
-    int V = 9;
-    Graph g(V);
+    int V = 5;
+    int E = 8;
 
-    //  making above shown graph
-    g.addEdge(0, 1, 4);
-    g.addEdge(0, 7, 8);
-    g.addEdge(1, 2, 8);
-    g.addEdge(1, 7, 11);
-    g.addEdge(2, 3, 7);
-    g.addEdge(2, 8, 2);
-    g.addEdge(2, 5, 4);
-    g.addEdge(3, 4, 9);
-    g.addEdge(3, 5, 14);
-    g.addEdge(4, 5, 10);
-    g.addEdge(5, 6, 2);
-    g.addEdge(6, 7, 1);
-    g.addEdge(6, 8, 6);
-    g.addEdge(7, 8, 7);
+    // edge list
+    int graph[][3] = {
+        {0, 1, -1}, {0, 2, 4},
+        {1, 2, 3}, {1, 3, 2},
+        {1, 4, 2}, {3, 2, 5},
+        {3, 1, 1}, {4, 3, -3}
+    };
 
-    g.shortestPath(0);
+    bellmanFord(graph, V, E, 0);
 
     return 0;
 }
