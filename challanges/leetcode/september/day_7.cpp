@@ -5,6 +5,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 2 pass method
+// tc : 2*O(N^4)
 class Solution {
 public:
     int largestOverlap(vector<vector<int>>& A, vector<vector<int>>& B) {
@@ -16,27 +18,41 @@ public:
             else    return 0;
         }
 
-        for(int i = 0; i < n; i++){
-            
-        }
-
+        // here we are finding B in A (i.e. B is a subset of A)
         int count = 0;
         for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
+            for(int j =0; j < n; j++){
                 int tempCount = 0;
                 int row = i;
                 int col = j;
                 for(int k = 0; k < n; k++){
                     for(int l = 0; l < n; l++){
-                        cout << "B -> r:" << (row + k) << ", c : "<< (col+l) << "\t"
-                             << "A -> r:" << k << ", c : " << l << endl;
-
-                        if(row+k < n && col+l<n && B[row+k][col+l] && A[k][l])
-                            tempCount++;
+                        if(row + k < n && col + l < n){
+                            if(B[row+k][col+l] && A[k][l]){
+                                tempCount++;
+                            }
+                        }
                     }
                 }
-                cout << "\n" << tempCount;
-                cout << "\n\n";
+                count = max(count, tempCount);
+            }
+        }
+
+        // here we are finding A in B (i.e. A is a subset of B)
+        for(int i = 0; i < n; i++){
+            for(int j =0; j < n; j++){
+                int tempCount = 0;
+                int row = i;
+                int col = j;
+                for(int k = 0; k < n; k++){
+                    for(int l = 0; l < n; l++){
+                        if(row + k < n && col + l < n){
+                            if(A[row+k][col+l] && B[k][l]){
+                                tempCount++;
+                            }
+                        }
+                    }
+                }
                 count = max(count, tempCount);
             }
         }
