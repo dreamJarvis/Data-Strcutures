@@ -21,7 +21,7 @@ void shortestpath(int src, vector<vector<int>> &matrix){
     for(int k = 0; k < N-1; k++){
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
-                if(dist[i] != INF && matrix[i][j] && dist[j] > (dist[i] + matrix[i][j]) ){
+                if(dist[i] != INF && matrix[i][j] && dist[j] > (dist[i] + matrix[i][j])%INF ){
                     dist[j] = dist[i] + matrix[i][j];
                     prev[j] = i;
                 }
@@ -29,17 +29,16 @@ void shortestpath(int src, vector<vector<int>> &matrix){
         }
     }
 
-    // for(int i = 0; i < N; i++)
-    //     if(i != src)
-    //         cout << src << " - " << i << "\t" << dist[i] << endl;
-    // cout << "\n\n";
-
     // to check if -ve cycles exist or not
     for(int k = 0; k < N-1; k++){
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
-                if(matrix[i][j] && dist[j] > (dist[i] + matrix[i][j]) ){
-                    // cout << j << "-" << i << "\t" <<dist[j] << endl;
+                // if dist[i] == NINF && matrix[i][j] < 0 , then dist[i] + matrix[i][j] gives unspecific behaviour
+                if(dist[i] == NINF && matrix[i][j] < 0){
+                    dist[j] = NINF;
+                    prev[j] = -1;
+                }
+                else if(matrix[i][j] && dist[j] > (dist[i] + matrix[i][j])){
                     dist[j] = NINF;
                     prev[j] = -1;
                 }
