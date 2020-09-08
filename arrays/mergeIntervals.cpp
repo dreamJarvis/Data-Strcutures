@@ -1,47 +1,69 @@
-// Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <utility>
 using namespace std;
 
-// stores every interval
-struct Interval{
-    int start;
-    int end;
-    Interval() : start(0), end(0) {}
-    Interval(int s, int e) : start(s), end(e) {}
-};
-
-// comparator : send true id a.start < b.start
-bool myCompare(const Interval a, const Interval b){
-    return a.start < b.start;
-}
-
-vector<Interval> mergeOverlappingIntervals(vector<Interval> &Intervals){
-    // sorts the Interval array in ascending order
-    sort(Intervals.begin(), Intervals.end(), myCompare);
-
-    int n = Intervals.size();
-    vector<Interval> result;
-    result.push_back(Intervals[0]);
-
-    for(int i = 0; i < n; i++){
-        if(Intervals[i].start <= result[result.size()-1].end)
-            result[result.size()-1].end = max(result[result.size()-1].end, Intervals[i].end);
-        else
-            result.push_back(Intervals[i]);
+class Solution {
+public:
+    static bool compare(const pair<int, int> &p1, const pair<int, int> &p2){
+        if(p1.first <= p2.first){
+            if(p1.first == p2.first){
+                if(p1.second > p2.second)   return true;
+            }
+            if(p1.first < p2.first) return true;
+        }
+        return false;
     }
 
-    return result;
-}
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<pair<int, int>> ranges;
+        vector<vector<int>> ans;
 
-// Driver function
+        for(auto i:intervals){
+            ranges.push_back(make_pair(i[0], i[1]));
+        }
+
+        // for(auto i:ranges)
+        //     cout << i.first << "-" << i.second << endl;
+
+        // sort(ranges.begin(), ranges.end(), compare);
+
+        int x = ranges[0].first;
+        int y = ranges[0].second;
+        ans.push_back({x, y});
+
+
+        for(int i = 1; i < ranges.size(); i++){
+            int a = ranges[i].first;
+            int b = ranges[i].second;
+
+            //  partial overlap
+            if(a < y && b > y){
+                ans[ans.size()-1][1] = b;
+                y = b;
+            }
+
+            // no overlapping
+            else if(a > y && b > y){
+                ans.push_back({a, b});
+                x = a;
+                y = b;
+            }
+        }
+
+        return ans;
+    }
+};
+
 int main(){
-    vector<Interval> ranges;
-    ranges.push_back(Interval(1, 3));
-    ranges.push_back(Interval(6, 9));
-    ranges.push_back(Interval(2, 8));
+    vector<vector<int>> intervals({
+        {1, 3}, {2, 6}, {8, 10}, {15, 18}
+    });
 
-    for(auto values:mergeOverlappingIntervals(ranges))
-        cout <<"["<< values.start << ", " << values.end << "], ";
+    Solution s;
+    for(auto i:s.merge(intervals))
+        cout << "(" << i[0] << ", " << i[1] << "),  ";
 
     return 0;
 }

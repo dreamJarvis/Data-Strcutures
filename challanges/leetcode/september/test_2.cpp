@@ -1,42 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+bool comp(const pair<int, int> &p1, const pair<int, int> &p2){
+    // return (p1.first < p2.first);
+    if(p1.first <= p2.first){
+        if(p1.first == p2.first){
+            if(p1.second > p2.second)   return true;
+        }
+        if(p1.first < p2.first) return true;
+    }
+    return false;
+}
+
 int main(){
-    string str1, str2;
-    cin >> str1 >> str2;
+    vector<pair<int,int>> range;
+    range.push_back({1, 4});
+    range.push_back({1, 2});
+    range.push_back({1, 19});
+    range.push_back({4, 7});
 
-    int cost1, cost2;
-    cin >> cost1 >> cost2;
+    // for(auto i:range)
+    //     cout << i.first << "-" << i.second << endl;
 
-    unordered_map<char, bool> freq1, freq2;
-
-    for(auto i:str1){
-        freq1[i]++;
-    }
-
-    for(auto i:str2){
-        freq2[i]++;
-    }
-
-    int totalCost = 0;
-    for(auto i:freq1){
-        if(!freq2.count(i.first)){
-            totalCost += cost1;
-        }
-    }
-
-    for(auto i:freq2){
-        if(!freq1.count(i.first)){
-            totalCost += cost2;
-        }
-    }
-
-    cout << totalCost << endl;
+    sort(range.begin(), range.end(), comp);
 
     return 0;
 }
-/*
-    adghk adjhkl
-    10 20
-    50
-*/

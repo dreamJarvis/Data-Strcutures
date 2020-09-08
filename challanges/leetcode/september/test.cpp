@@ -1,42 +1,69 @@
-/*
-    https://leetcode.com/problems/partition-labels/
-    763. Partition Labels
-*/
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <utility>
 using namespace std;
 
-string checkPath(vector<vector<int>> &arr, int i, int j,
-                unordered_map<string, bool> &visited, string path)
-{
-    
-}
+class Solution {
+public:
+    static bool compare(const pair<int, int> &p1, const pair<int, int> &p2){
+        if(p1.first <= p2.first){
+            if(p1.first == p2.first){
+                if(p1.second > p2.second)   return true;
+            }
+            if(p1.first < p2.first) return true;
+        }
+        return false;
+    }
 
-vector<int> allPossiblePaths(vector<vector<int>> &arr){
-    int n = arr.size();
-    vector<string> paths;
-    unordered_map<string, bool> visited;
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
-            if(arr[i]){
-                string res = checkPath(arr, i, j, visited, "");
-                paths.push_back(res);
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<pair<int, int>> ranges;
+        vector<vector<int>> ans;
+
+        for(auto i:intervals){
+            ranges.push_back(make_pair(i[0], i[1]));
+        }
+
+        // for(auto i:ranges)
+        //     cout << i.first << "-" << i.second << endl;
+
+        // sort(ranges.begin(), ranges.end(), compare);
+
+        int x = ranges[0].first;
+        int y = ranges[0].second;
+        ans.push_back({x, y});
+
+
+        for(int i = 1; i < ranges.size(); i++){
+            int a = ranges[i].first;
+            int b = ranges[i].second;
+
+            //  partial overlap
+            if(a < y && b > y){
+                ans[ans.size()-1][1] = b;
+                y = b;
+            }
+
+            // no overlapping
+            else if(a > y && b > y){
+                ans.push_back({a, b});
+                x = a;
+                y = b;
             }
         }
-    }
-}
 
-// Driver function
+        return ans;
+    }
+};
+
 int main(){
-    vector<vector<int>> arr({
-        {1, 1, 0},
-        {0, 1, 0},
-        {0, 1, 0},
+    vector<vector<int>> intervals({
+        {1, 3}, {2, 6}, {8, 10}, {15, 18}
     });
 
-    // vector<vector<int>> B({
-    //     {0, 0, 0},
-    //     {0, 1, 1},
-    //     {0, 1, 0},
-    // });
+    Solution s;
+    for(auto i:s.merge(intervals))
+        cout << "(" << i[0] << ", " << i[1] << "),  ";
+
     return 0;
 }

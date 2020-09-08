@@ -4,37 +4,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// class Solution {
-// public:
-//     bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
-//         int n = nums.size();
-//
-//         unordered_map<int, int> mp;
-//         int i = 0;
-//         for(i = 0; i < k; i++){
-//             if(mp.count(abs(nums[i] + t)) || mp.count(abs(nums[i] - t))){
-//                 return true;
-//             }
-//             mp[nums[i]]++;
-//         }
-//
-//         cout << i << endl;
-//
-//         if(i < n){
-//             for(; i < n; i++){
-//                 cout << i << endl;
-//                 mp[nums[i-k]]--;
-//                 mp[nums[i]]++;
-//
-//                 if(mp.count(abs(nums[i]+t)) > 0 || mp.count(abs(nums[i]-t)) > 0)
-//                     return true;
-//             }
-//         }
-//
-//         return false;
-//     }
-// };
-
 class Solution {
 public:
     bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {

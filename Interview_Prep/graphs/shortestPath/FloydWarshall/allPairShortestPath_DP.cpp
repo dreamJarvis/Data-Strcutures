@@ -26,8 +26,9 @@ void flyodWarshall(int graph[][V]){
             for(int j = 0; j < V; j++)
                 if( dist[i][k] != INF && dist[k][j] != INF &&
                     dist[i][k] + dist[k][j] < dist[i][j]
-                )
+                ){
                     dist[i][j] = dist[i][k] + dist[k][j];
+                }
 
     // print solution
     for(int i = 0; i < V; i++){

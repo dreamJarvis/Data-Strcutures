@@ -11,13 +11,13 @@ using namespace std;
 #define NIL -1
 
 class Graph {
-    int V;                  // No. of vertices
-    list<int> *adj;         // a dynamic array of adjacency lists
+    int V, id;                  // No. of vertices
     bool *visited;          // keeps the count of visited nodes
-    int id, *low, *ids;     // keeps the ids(id of each node), low(lowest reachable id from each node), id(univeral id count)
+    int *low, *ids;     // keeps the ids(id of each node), low(lowest reachable id from each node), id(univeral id count)
+    list<int> *adj;         // a dynamic array of adjacency lists
     void bridgeUtil(int at, int parent, vector<pair<int, int>> &bridges);
 public:
-    Graph(int V) : V(V), adj(new list<int>[V]) {}
+    Graph(int V) : V(V), id(0), adj(new list<int>[V]) {}
     void addEdge(int v, int w);     // to add an edge
     vector<pair<int, int>> bridge();
 };
@@ -58,7 +58,6 @@ void Graph::bridgeUtil(int at, int parent, vector<pair<int, int>> &bridges){
 }
 
 vector<pair<int, int>> Graph::bridge(){
-    id = 0;
     low = new int[V];
     ids = new int[V];
     visited = new bool[V];
@@ -91,7 +90,7 @@ int main(){
         cout << i.first << " - " << i.second << endl;
     cout << endl;
 
-    cout << "\nBridges for graph 2 : \n";
+    cout << "Bridges for graph 2 : \n";
     Graph g2(5);
     g2.addEdge(1, 0);
     g2.addEdge(2, 0);
@@ -103,7 +102,7 @@ int main(){
         cout << i.first << " - " << i.second << endl;
     cout << endl;
 
-    cout << "\nBridges for graph 3 : \n";
+    cout << "Bridges for graph 3 : \n";
     Graph g3(5);
     g3.addEdge(0, 1);
     g3.addEdge(1, 2);
