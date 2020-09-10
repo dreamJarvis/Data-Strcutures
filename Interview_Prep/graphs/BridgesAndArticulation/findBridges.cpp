@@ -12,9 +12,9 @@ using namespace std;
 
 class Graph {
     int V, id;                  // No. of vertices
-    bool *visited;          // keeps the count of visited nodes
-    int *low, *ids;     // keeps the ids(id of each node), low(lowest reachable id from each node), id(univeral id count)
-    list<int> *adj;         // a dynamic array of adjacency lists
+    bool *visited;              // keeps the count of visited nodes
+    int *low, *ids;             // keeps the ids(id of each node), low(lowest reachable id from each node), id(univeral id count)
+    list<int> *adj;             // a dynamic array of adjacency lists
     void bridgeUtil(int at, int parent, vector<pair<int, int>> &bridges);
 public:
     Graph(int V) : V(V), id(0), adj(new list<int>[V]) {}
@@ -29,11 +29,8 @@ void Graph::addEdge(int v, int w){
 }
 
 /*
-    A recursive function that finds an prints bridges using DFS traversal
-    u --> the vertex to be visited next
-    visited[] --> keeps track of visited vertices
-    disc[] --> stores discovery time of visited vertices
-    parent[] --> stores parent vertices in DFS tree
+    perform Depth first search (DFS) to find bridges.
+    at = current node, parent = previous node.
 */
 void Graph::bridgeUtil(int at, int parent, vector<pair<int, int>> &bridges){
     visited[at] = true;

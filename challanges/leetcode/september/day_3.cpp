@@ -64,14 +64,15 @@ public:
             */
             else {
                 buckets[bucket] = nums[i];
-                if(buckets.find(bucket-1) != buckets.end() && (long) nums[i] - buckets[bucket-1] <= t){
+                if((buckets.find(bucket-1) != buckets.end()) && ((long) nums[i] - buckets[bucket-1] <= t)){
                     return true;
                 }
-                if(buckets.find(bucket+1) != buckets.end() && (long) buckets[bucket+1] - nums[i] <= t){
+                if((buckets.find(bucket+1) != buckets.end()) && ((long) buckets[bucket+1] - nums[i] <= t)){
                     return true;
                 }
 
                 // each bucket is maintained within the boundaries of k length
+                // so when we reach the k'th element, then we delete the 1st bucket of that boundary
                 if(buckets.size() > k) {
                     int key_to_remove = nums[i-k] / ((long)t + 1);
 
