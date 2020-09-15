@@ -1,25 +1,17 @@
 /*
     Kruskal’s Minimum Spanning Tree using STL in C++
     https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-using-stl-in-c/?ref=rp
+    Time complexity : O(Elog(E))
 */
 
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <list>
 using namespace std;
 
 typedef pair<int, int> iPair;
-
-struct Graph{
-    int V, E;
-    vector<pair<int, iPair>> edges;
-
-    Graph(int V, int E) : V(V), E(E) {}
-    void addEdge(int u, int v, int w){
-        edges.push_back({w, {u, v}});
-    }
-
-    // to find MST
-    int kruskalMST();
-};
 
 // to represent Disjoint sets
 struct DisjointSets{
@@ -61,6 +53,20 @@ struct DisjointSets{
             rnk[y]++;
     }
 };
+
+struct Graph{
+    int V, E;
+    vector<pair<int, iPair>> edges;
+
+    Graph(int V, int E) : V(V), E(E) {}
+    void addEdge(int u, int v, int w){
+        edges.push_back({w, {u, v}});
+    }
+
+    // to find MST
+    int kruskalMST();
+};
+
 
 // to find the MST, and total cost of the path taken
 int Graph::kruskalMST(){

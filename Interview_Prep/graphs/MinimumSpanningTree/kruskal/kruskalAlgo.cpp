@@ -1,6 +1,7 @@
 /*
     Kruskal’s Minimum Spanning Tree Algorithm
     https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/?ref=rp
+    Time complexity : O(Elog(E))
 */
 #include <bits/stdc++.h>
 using namespace std;
