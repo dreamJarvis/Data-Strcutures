@@ -5,6 +5,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+// O(n) solutions
 class Solution {
 public:
     void helper(vector<int> &nums, int n, int k, string &result){
@@ -22,6 +24,7 @@ public:
 
         helper(nums, n-=1, k, result);
     }
+
     string getPermutation(int n, int k) {
         string result ="";
         vector<int> nums(n);
@@ -31,6 +34,34 @@ public:
 
         k--;
         helper(nums, n, k, result);
+
+        for(auto &i:nums)
+            result += to_string(i);
+
+        return result;
+    }
+
+    // iterative
+    string getPermutationIterative(int n, int k) {
+        string result ="";
+        vector<int> nums(n);
+
+        for(int i = 1; i <= n; i++)
+            nums[i-1] = i;
+
+        k--;
+        while(k){
+            int permute = 1;
+            for(int i = 1; i < n; i++)
+                permute *= i;
+
+            int pos = k/permute;
+            k = k%permute;
+
+            result += to_string(nums[pos]);
+            nums.erase(nums.begin()+pos);
+            n -= 1;
+        }
 
         for(auto &i:nums)
             result += to_string(i);
@@ -49,7 +80,7 @@ int main(){
     int n = 9, k = 206490;
 
     Solution s;
-    cout << s.getPermutation(n, k) << endl;
+    cout << s.getPermutationRecursive(n, k) << endl;
 
     return 0;
 }
