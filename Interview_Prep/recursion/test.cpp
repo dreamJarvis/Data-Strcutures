@@ -7,49 +7,50 @@ using namespace std;
 
 class Solution {
 public:
-    void helper(vector<int> &nums, int n, int k, string &result){
-        if(k == 0)  return;
+    void helper(string str, int n, int pos, set<string> &result){
+        if(pos == n)
+            return;
 
-        int permute = 1;
-        for(int i = 1; i < n; i++)
-            permute *= i;
+        result.insert(str);
 
-        int pos = k/permute;
-        k = k%permute;
-
-        result += to_string(nums[pos]);
-        nums.erase(nums.begin()+pos);
-
-        helper(nums, n-=1, k, result);
+        for(int i = pos; i < n; i++){
+            for(int j = n+pos-1; j < 2*n-1; j++){
+                swap(str[i], str[j]);
+                helper(str, n, pos+1, result);
+                swap(str[i], str[j]);
+            }
+        }
     }
-    string getPermutation(int n, int k) {
-        string result ="";
-        vector<int> nums(n);
 
-        for(int i = 1; i <= n; i++)
-            nums[i-1] = i;
+    vector<string> generateParenthesis(int n) {
+        set<string> st;
+        vector<string> result;
+        string str = "";
 
-        k--;
-        helper(nums, n, k, result);
+        for(int i = 0; i < n; i++)  str += '(';
+        for(int i = 0; i < n; i++)  str += ')';
 
-        for(auto &i:nums)
-            result += to_string(i);
+        st.insert(str);
 
+        if(n > 2)
+            helper(str, n, 1, st);
+        else if(n == 2){
+            st.insert("()()");
+        }
+
+        for(auto i:st)
+            result.push_back(i);
         return result;
     }
 };
 
 // Driver function
 int main(){
-    // int n = 3, k = 3;
-    // int n = 4, k = 9;
-    // int n = 3, k = 5;
-    // int n = 2, k = 2;
-    // int n = 1, k = 1;
-    int n = 9, k = 206490;
+    int n = 3;
 
     Solution s;
-    cout << s.getPermutation(n, k) << endl;
+    for(auto i:s.generateParenthesis(n))
+        cout << i << endl;
 
     return 0;
 }
