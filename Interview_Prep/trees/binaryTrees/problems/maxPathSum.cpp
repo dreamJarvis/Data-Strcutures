@@ -35,9 +35,34 @@ int maxPathSumUtil(TreeNode *root, int &maxSum){
     return ifPathContinues;
 }
 
+//Alternate and concise code by Prankishor
+
+/*
+int findMaxSum (TreeNode *root, int &maxsum)
+{
+	if(root == NULL)
+	{
+		return 0;
+	}
+	
+	int l = findMaxSum(root->left, res);
+	int r = findMaxSum(root->right, res);
+	
+	//first case
+	int temp = max(max(l,r)+root->data, root->data);
+	//2nd case
+	int ans = max(temp, l+r+root->data);
+	
+	res = max(res, ans);
+	
+	return temp;
+}
+*/
+
 int maxPathSum(TreeNode *root){
     int maxSum = INT_MIN;
     maxPathSumUtil(root, maxSum);
+    //findMaxSum(root, maxSum);
     return maxSum;
 }
 
