@@ -70,7 +70,7 @@ public:
 
 // Driver function
 int main(){
-    vector<int> arr({1, 2, 2, 1});
+    vector<int> arr({1, 2, 2});
 
     SolutionII s;
 
