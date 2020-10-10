@@ -14,15 +14,13 @@ int helper(vector<int> &coins, int amount, int n){
 
     // base case
     if(n < 0){
-        if(amount == 0){
+        if(amount == 0)
             return 1;
-        }
         return 0;
     }
 
-    if(amount == 0){
+    if(amount == 0)
         return 1;
-    }
 
     if(dp.count(key))
         return dp[key];
@@ -100,9 +98,8 @@ int main(){
     // vector<int> coins({1, 2, 5});
     // int amount = 500;
 
-    cout << changeMemo(amount, coins) << endl;
     // cout << changeDP(amount, coins) << endl;
-    // cout << change(amount, coins) << endl;
+    cout << change(amount, coins) << endl;
 
     return 0;
 }

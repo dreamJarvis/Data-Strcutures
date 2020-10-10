@@ -1,33 +1,64 @@
+/*
+    377. Combination Sum IV
+    https://leetcode.com/problems/combination-sum-iv/
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isUgly(int num) {
-    bool flag = true;
-    while(num){
-        if(num == 1)    return true;
-        if(num%2 == 0 || num%3 ==0 || num%5 == 0){
-            if(num%2 == 0){
-                num = num/2;
-            }
-            else if(num%3 == 0){
-                num = num/3;
-            }
-            else if(num%5 == 0){
-                num = num/5;
-            }
+// unordered_map<string, int> dp;
+vector<string> subsets;
+int helper(vector<int>& nums, int target, int n, string str){
+    // string key = to_string(n) + '_' + to_string(target);
 
-            cout << num << endl;
+    if(n < 0){
+        if(target == 0){
+            subsets.push_back(str);
+            return 1;
         }
-        else
-            return false;
+        return 0;
     }
 
-    return true;
+    if(target == 0){
+        subsets.push_back(str);
+        return 1;
+    }
+
+    // if(dp.count(key))
+    //     return dp[key];
+
+    if(nums[n] > target)
+        return helper(nums, target, n-1, str);
+    else{
+        return  (
+            helper(nums, target-nums[n], n, str+to_string(nums[n])) +
+            helper(nums, target, n-1, str)
+        );
+    }
+
+    // return dp[key];
+}
+
+int combinationSum4(vector<int>& nums, int target) {
+    int n = nums.size();
+    // vector<bool> visited(nums.size(), false);
+    int res = helper(nums, target, n-1, "");
+
+    cout << "subsets : " << endl;
+    for(auto &i:subsets)
+        cout << i << endl;
+
+    return res;
 }
 
 // Driver function
 int main(){
-    int n = 6;
-    cout << isUgly(n) << endl;
+    // vector<int> arr({1, 2, 3});
+    // int target = 4;
+
+    vector<int> arr({1, 2, 3});
+    int target = 4;
+
+    cout << combinationSum4(arr, target) << endl;
+
     return 0;
 }

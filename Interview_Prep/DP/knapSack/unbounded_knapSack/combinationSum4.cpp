@@ -6,20 +6,39 @@
 using namespace std;
 
 // ==================================== Memoisation ================================= //
-// tc : O(n*amount)
-// sc : O(n*amount)
+/*
+tc : O(n*amount)
+sc : O(n*amount)
+
+we are finding the total number of possibilities it would give us to make an target,
+now in this we are continiously decreasing the target, (in the for loop),
+in order to avoid the overlapping sub-problems we will just store it,
+as we are going depth first, all the smallest targets, will be filled first,
+then those values will be used to fill out the bigger values of target,
+eventually we will fill the values in the original target value
+
+i would recommend to draw the recursive tree, and find out the overlapping sub-problems
+*/
 unordered_map<string, double> dp;
 int helper(vector<int>& nums, int target){
     string key = to_string(target);
+
     if(target == 0)
         return 1;
 
     if(target < 0)
         return 0;
 
+    // count's the total no. of combination that will give me the current target
     int count = 0;
     for(int i = 0; i < nums.size(); i++){
         if(nums[i] <= target){
+
+            /*
+            if the target already exist we will just get our value
+            from the stored value in out dp,
+            we wont have to recur again
+            */
             if(!dp.count(key))
                 count += helper(nums, target-nums[i]);
             else
@@ -27,6 +46,7 @@ int helper(vector<int>& nums, int target){
         }
     }
 
+    // we will store the total combination for this current target
     dp[key] = count;
     return count;
 }

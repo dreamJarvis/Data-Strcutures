@@ -95,40 +95,38 @@ int knapsackDP(vector<int> &value, vector<int> &weight, int W){
             }
         }
     }
-
-    // // display
-    // for(int i = 0; i <= n; i++){
-    //     for(int j = 0; j <= W; j++)
-    //         cout << dp[i][j] << " ";
-    //     cout << endl;
-    // }
-
+    
     return dp[n][W];
 }
 
 // Driver function
 int main(){
-    vector<int> value ({60, 100, 120});
-    vector<int> weight ({10, 20, 30});
-    int W = 50;
+    // vector<int> value ({60, 100, 120});
+    // vector<int> weight ({10, 20, 30});
+    // int W = 50;
 
-    clock_t a, b, c;
+    vector<int> value({1, 4, 5, 7});
+    vector<int> weight({1, 3, 4, 5});
+    int W = 8;
 
-    a = clock();
-    cout << knapsack(value, weight, W) << endl;
-    a = clock() - a;
 
-    b = clock();
-    cout << knapsackMemo(value, weight, W) << endl;
-    b = clock() - b;
+    // clock_t a, b, c;
 
-    c = clock();
+    // a = clock();
+    // cout << knapsack(value, weight, W) << endl;
+    // a = clock() - a;
+
+    // b = clock();
+    // cout << knapsackMemo(value, weight, W) << endl;
+    // b = clock() - b;
+
+    // c = clock();
     cout << knapsackDP(value, weight, W) << endl;
-    c = clock() - c;
+    // c = clock() - c;
 
-    cout << "recur : " << a << endl;
-    cout << "Memo : " << b << endl;
-    cout << "DP : " << c << endl;
+    // cout << "recur : " << a << endl;
+    // cout << "Memo : " << b << endl;
+    // cout << "DP : " << c << endl;
 
     return 0;
 }
