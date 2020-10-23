@@ -14,8 +14,6 @@ int helper(vector<int> &coins, int amount, int n){
 
     // base case
     if(n < 0){
-        if(amount == 0)
-            return 1;
         return 0;
     }
 
@@ -69,6 +67,9 @@ int changeDP(int amount, vector<int>& coins){
 // tc : O(n*m), m < amount
 // tc : O(n*m), m < amount
 int change(int amount, vector<int>& coins) {
+    if(amount == 0)
+        return 1;
+
     int dp[amount+1];
     memset(dp, 0, sizeof dp);
 

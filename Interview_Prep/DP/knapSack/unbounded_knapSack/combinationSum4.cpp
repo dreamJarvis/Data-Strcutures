@@ -33,7 +33,6 @@ int helper(vector<int>& nums, int target){
     int count = 0;
     for(int i = 0; i < nums.size(); i++){
         if(nums[i] <= target){
-
             /*
             if the target already exist we will just get our value
             from the stored value in out dp,
@@ -58,13 +57,19 @@ int combinationSum4(vector<int>& nums, int target) {
 // ====================================== Bottom Up =========================== //
 // tc : O(n*amount)
 // sc : O(n*amount)
+
+/*
+    https://leetcode.com/problems/combination-sum-iv/discuss/835673/C%2B%2B-solution-well-commented
+    similar to climbing stairs question
+*/
 int combinationSum4DP(vector<int>& nums, int target) {
     vector<double> dp(target+1, 0);
+
     dp[0] = 1;
 
     for(int i = 1; i <= target; i++){
         for(auto &num:nums)
-            if(num <= i)
+            if(i-num >= 0)
                 dp[i] += dp[i-num];
     }
 
@@ -74,11 +79,11 @@ int combinationSum4DP(vector<int>& nums, int target) {
 
 // Driver function
 int main(){
-    // vector<int> arr({1, 2, 3});
-    // int target = 4;
-
-    vector<int> arr({3, 1, 2, 4});
+    vector<int> arr({1, 2, 3});
     int target = 4;
+
+    // vector<int> arr({3, 1, 2, 4});
+    // int target = 4;
 
     // vector<int> arr({3,33,333});
     // int target = 10000;

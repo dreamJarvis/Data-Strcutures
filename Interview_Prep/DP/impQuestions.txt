@@ -1,0 +1,4 @@
+983. Minimum Cost For Tickets
+518. Coin Change 2
+377. Combination Sum IV
+1092. Shortest Common Supersequence

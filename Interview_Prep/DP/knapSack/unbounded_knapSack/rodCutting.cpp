@@ -4,35 +4,31 @@
     https://www.techiedelight.com/rot-cutting/
 */
 #include <iostream>
-#include <string>
 #include <unordered_map>
 #include <climits>
 #include <cstring>
 using namespace std;
 
-
-// ======================================== Memo ===================================== //
+// ======================================== Memo ==================================== //
 // tc : O(n*L)
 // sc : O(n*L)
-unordered_map<string, int> dp;
-int maxSegments(int *arr, int L, int n){
-    string key = to_string(n) + '_' + to_string(L);
-    if(n < 0){
-        if(L==0)
-            return 0;
+int util(int L, int *segments, int n, unordered_map<string, int> &dp){
+    string key = to_string(L) + '_' + to_string(n);
+
+    // base cases
+    if(n < 0)
         return INT_MIN;
-    }
 
     if(L == 0)
         return 0;
 
-    if(arr[n] > L)
-        return maxSegments(arr, L, n-1);
+    if(segments[n] > L)
+        return util(L, segments, n-1, dp);
     else{
-        if(!dp.count(key)){
+        if(!dp[key]){
             dp[key] = max(
-                    maxSegments(arr, L-arr[n], n) + 1,
-                    maxSegments(arr, L, n-1)
+                    1 + util(L-segments[n], segments, n, dp),
+                    util(L, segments, n-1, dp)
                 );
         }
     }
@@ -40,45 +36,42 @@ int maxSegments(int *arr, int L, int n){
     return dp[key];
 }
 
+int maxSegments(int L, int segments[]){
+    unordered_map<string, int> dp;
+    return util(L, segments, 2, dp);
+}
+
 // ====================================== Top Down ==========================================//
 // tc : O(n*L)
 // sc : O(n*L)
-int maxSegmentsTopDown(int *arr, int L, int n){
-    int dp[n+1][L+1];
-    memset(dp, 0, sizeof dp);
+int maxSegmentCut(int L, int segs[]){
+    int dp[4][L+1];
+    memset(dp, 0, sizeof(dp));
 
-    for(int i = 0; i <= n; i++)
+    // initialization
+    for(int i = 0; i <= L; i++)
+        dp[0][i] = INT_MIN;
+
+    for(int i = 0; i < 4; i++)
         dp[i][0] = 0;
 
-    for(int i = 0; i <= L; i++)
-        dp[0][i] = 0;
-
-    for(int i = 1; i <= n; i++){
+    for(int i = 1; i < 4; i++){
         for(int j = 1; j <= L; j++){
-            if(j >= arr[i-1]){
-                if((dp[i][j-arr[i-1]] > 0) || (j == arr[i-1])){
-                    dp[i][j] = max(
-                                dp[i][j-arr[i-1]]+1,
-                                dp[i-1][j]
-                            );
-                }else{
-                    dp[i][j] = max(
-                                dp[i][j-arr[i-1]],
-                                dp[i-1][j]
-                            );
-                }
-            }
-            else{
+            if(j-segs[i-1] >= 0)
+                dp[i][j] = max(dp[i-1][j], 1 + dp[i][j-segs[i-1]]);
+            else
                 dp[i][j] = dp[i-1][j];
-            }
         }
     }
 
-    return dp[n][L];
+    return dp[3][L];
 }
 
 // Driver function
 int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
     int tc;
     cin >> tc;
 
@@ -90,7 +83,7 @@ int main(){
         for(int i = 0; i < 3; i++)
             cin >> arr[i];
 
-        cout << maxSegments(arr, l, 2) << endl;
+        cout << maxSegments(l, arr) << endl;
         // cout << maxSegmentsTopDown(arr, l, 3) << endl;
     }
 
