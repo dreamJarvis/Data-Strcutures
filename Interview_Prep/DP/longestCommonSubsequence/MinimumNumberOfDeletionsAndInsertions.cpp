@@ -25,19 +25,20 @@ int lcs(string a, string b){
 }
 
 int minOperations(string word1, string word2){
-    int temp = lcs(word1, word2);
-    int sum = (word2.length()-temp) + (word1.length()-temp);
-
-    return (sum);
+    int lcsLen = lcs(word1, word2);
+    int numberOfDeletions = word2.length() - lcsLen;
+    int numOfinsertions =    word1.length() - lcsLen;
+    int totalSum = numOfAdditions + numberOfDeletions;
+    return (totalSum);
 }
 
 // Driver function
 int main(){
-    // string a = "heap";
-    // string b = "pea";
+    string a = "heap";
+    string b = "pea";
 
-    string a = "geeksforgeeks";
-    string b = "geeks";
+    // string a = "geeksforgeeks";
+    // string b = "geeks";
 
     cout << minOperations(a, b) << endl;
 

@@ -1,27 +1,55 @@
+/*
+    10. Regular Expression Matching
+    https://leetcode.com/problems/regular-expression-matching/
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
-int util(string a, string b, int n, int m){
-    
-}
 
-int longestCommonSubstring(string a, string b){
-    return util(a, b, 0, 0);
-}
 
-// Driver Code
+// Driver function
 int main(){
-    string str1 = "GeeksforGeeks";
-    string str2 = "GeeksQuiz";
+    // string str = "aasdfasdfasdfasdfas";
+    // string p = "aasdf.*asdf.*asdf.*asdf.*s";
 
-    // string str1 = "abc";
-    // string str2 = "abc";
+    // string str = "a";
+    // string p = "ab*a";
 
-    // string str1 = "abc";
-    // string str2 = "def";
+    // string str = "aa";
+    // string p = "a";
 
+    string str = "aa";
+    string p = "a*";
 
-    cout << longestCommonSubstring(str1, str2) << endl;
+    // string str = "ab";
+    // string p = ".*";
+
+    // string str = "aab";
+    // string p = "c*a*b";
+
+    // string str = "mississippi";
+    // string p = "mis*is*p*.";
+
+    // string str = "mississippi";
+    // string p = "mis*is*ip*.";
+
+    // string str = "aaa";
+    // string p = "ab*a*c*a";
+
+    cout << isMatch(str, p) << endl;
 
     return 0;
 }
+/*
+"mississippi"
+"mis*is*ip*."
+
+"a"
+"ab*a"
+
+"aaa"
+"ab*a*c*a"
+
+"aasdfasdfasdfasdfas"
+"aasdf.*asdf.*asdf.*asdf.*s"
+*/

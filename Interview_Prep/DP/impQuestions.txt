@@ -2,3 +2,5 @@
 518. Coin Change 2
 377. Combination Sum IV
 1092. Shortest Common Supersequence
+44. Wildcard Matching
+10. Regular Expression Matching

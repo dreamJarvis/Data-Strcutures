@@ -5,9 +5,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string shortestCommonSupersequence(string a, string b){
-    int n = a.size();
-    int m = b.size();
+string scc(string a, string b){
+    int n = a.length();
+    int m = b.length();
 
     int dp[n+1][m+1];
 
@@ -18,7 +18,10 @@ string shortestCommonSupersequence(string a, string b){
             else if(a[i-1] == b[j-1])
                 dp[i][j] = 1 + dp[i-1][j-1];
             else
-                dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1]);
+                dp[i][j] = 1 + min(
+                                dp[i-1][j],
+                                dp[i][j-1]
+                            );
         }
     }
 
@@ -27,8 +30,7 @@ string shortestCommonSupersequence(string a, string b){
     while(i && j){
         if(a[i-1] == b[j-1]){
             result += a[i-1];
-            i--;
-            j--;
+            i--; j--;
         }
         else{
             if(dp[i-1][j] < dp[i][j-1]){
@@ -42,8 +44,7 @@ string shortestCommonSupersequence(string a, string b){
         }
     }
 
-    // if i, or j reaches end, then add the remaining charecters
-    while(i > 0){
+    while(i){
         result += a[i-1];
         i--;
     }
@@ -59,35 +60,13 @@ string shortestCommonSupersequence(string a, string b){
 
 // Driver function
 int main(){
-    // string a = "abac";
-    // string b = "cab";
+    string a = "abcd";
+    string b = "xycd";
 
-    // string a = "geek";
-    // string b = "eke";
+    // string a = "efgh";
+    // string b = "jghi";
 
-    string a = "AGGTAB";
-    string b = "GXTXAYB";
-
-    // string a = "baabaaabb";
-    // string b = "bbabbbaab";
-
-    // string a = "bbcbcaabc";
-    // string b = "cacaabaaaa";
-
-    cout << shortestCommonSupersequence(a, b) << endl;
+    cout << scc(a, b) << endl;
 
     return 0;
 }
-/*
-    // string a = "geek";
-    // string b = "eke";
-
-    // string a = "AGGTAB";
-    // string b = "GXTXAYB";
-
-    // string a = "baabaaabb";
-    // string b = "bbabbbaab";
-
-    // string a = "bbcbcaabc";
-    // string b = "cacaabaaaa";
-*/
