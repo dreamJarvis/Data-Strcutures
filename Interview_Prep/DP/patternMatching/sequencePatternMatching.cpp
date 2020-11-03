@@ -6,46 +6,46 @@
 using namespace std;
 
 // // tc : O(n^2)
-// unordered_map<string, bool> dp;
-// bool util(string s, string p, int n, int m){
-//     string key = to_string(n) + to_string(m) + to_string(n+m);
-//
-//     if(n <= -1 && m <= -1)
-//         return true;
-//
-//     if(n <= -1 && m != -1){
-//         if(p[m] == '*'){
-//             return util(s, p, n, m-1);
-//         }
-//         return false;
-//     }
-//
-//     if(dp.count(key))
-//         return dp[key];
-//
-//     if(s[n] == p[m]){
-//         dp[key] = util(s, p, n-1, m-1);
-//     }
-//     else{
-//         if(p[m] == '*'){
-//             dp[key] =   util(s, p, n, m-1)   ||
-//                         util(s, p, n-1, m);
-//         }
-//         else if(p[m] == '?'){
-//             dp[key] = util(s, p, n-1, m-1) ;
-//         }
-//         else
-//             dp[key] = false;
-//     }
-//
-//     return dp[key];
-// }
-//
-// bool isMatchMemo(string s, string p) {
-//     int n = s.length();
-//     int m = p.length();
-//     return util(s, p, n-1, m-1);
-// }
+unordered_map<string, bool> dp;
+bool util(string s, string p, int n, int m){
+    string key = to_string(n) + to_string(m) + to_string(n+m);
+
+    if(n <= -1 && m <= -1)
+        return true;
+
+    if(n <= -1 && m != -1){
+        if(p[m] == '*'){
+            return util(s, p, n, m-1);
+        }
+        return false;
+    }
+
+    if(dp.count(key))
+        return dp[key];
+
+    if(s[n] == p[m]){
+        dp[key] = util(s, p, n-1, m-1);
+    }
+    else{
+        if(p[m] == '*'){
+            dp[key] =   util(s, p, n, m-1)   ||
+                        util(s, p, n-1, m);
+        }
+        else if(p[m] == '?'){
+            dp[key] = util(s, p, n-1, m-1) ;
+        }
+        else
+            dp[key] = false;
+    }
+
+    return dp[key];
+}
+
+bool isMatchMemo(string s, string p) {
+    int n = s.length();
+    int m = p.length();
+    return util(s, p, n-1, m-1);
+}
 
 // tc : O(n^2)
 // sc : O(n^2)
