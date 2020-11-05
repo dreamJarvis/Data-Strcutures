@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 #include <climits>
-#include <cstring>
 #include <unordered_map>
 using namespace std;
 
@@ -57,7 +56,9 @@ int mcmMemo(vector<int> &arr, int i, int j){
 int mcmDP(vector<int> &arr){
     int n = arr.size();
     int dp[n][n];
-    memset(dp, 0, sizeof(dp));
+
+    for(int i = 1; i < n; i++)
+        dp[i][i] = 0;
 
     for(int l = 2; l < n; l++){
         for(int i = 1; i < n-l+1; i++){
@@ -81,7 +82,7 @@ int main(){
     vector<int> arr({1, 2, 3, 4, 3});
     int n = arr.size();
 
-    // cout << "Minimum number of multiplication is : " << mcm(arr, 1, n-1) << endl;
+    cout << "Minimum number of multiplication is : " << mcm(arr, 1, n-1) << endl;
     // cout << "Minimum number of multiplication is : " << mcmMemo(arr, 1, n-1) << endl;
     cout << "Minimum number of multiplication is : " << mcmDP(arr) << endl;
 

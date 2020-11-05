@@ -35,7 +35,7 @@ bool isScramble(string s1, string s2){
 
     int n = s1.length();
     bool flag = false;
-    for(int i = 1; i < s1.length(); i++){
+    for(int i = 1; i < n; i++){
         bool left = isScramble(s1.substr(0, i), s2.substr(n-i, i)) &&
                     isScramble(s1.substr(i, n-i), s2.substr(0, n-i));
 

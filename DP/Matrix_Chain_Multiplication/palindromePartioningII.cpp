@@ -56,7 +56,7 @@ using namespace std;
 int minCut(string str){
     int n = str.length();
 
-    int dp[n+1][n+1];
+    bool dp[n+1][n+1];
     memset(dp, false, sizeof(dp));
 
     // palindrome of length = 1
@@ -135,10 +135,10 @@ int minCut2(string s){
 
 // Driver function
 int main(){
-    // string str = "banana";
-    string str = "ccd";
+    string str = "aabbbc";
+    // string str = "ccd";
 
-    // cout << minCut(str) << endl;
+    cout << minCut(str) << endl;
     cout << minCut2(str) << endl;
 
     return 0;
