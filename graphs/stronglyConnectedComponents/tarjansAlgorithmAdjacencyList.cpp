@@ -44,7 +44,7 @@ void Graph::tarjansUtil(int at){
 
         /*
         this line allows the propogation of low-link value within a
-        strongly Connected component, by making sur that the low-link value
+        strongly Connected component, by making sure that the low-link value
         is only accounted for when it comes from one of it's neighbours i.e.
         nodes in the cycle
         */
@@ -52,7 +52,7 @@ void Graph::tarjansUtil(int at){
     }
 
     /*  After having visited all the neighbours of 'at'
-        if we're at the start of a SCC emoty the seen stack
+        if we're at the start of a SCC, empty the seen stack
         until we're back to the start of SCC.
     */
     if(ids[at] == low[at]){
@@ -66,15 +66,15 @@ void Graph::tarjansUtil(int at){
             as we dont want the next scc's components to consider
             any one of the low-link's value of this components nodes
 
-            also we are assining the nodes of the same components,
-            with same ids, so that it will be easer to locate them afterwards
+            also we are assigning the nodes of the same components,
+            with same ids, so that it will be easier to locate them afterwards
             */
             onStack[node] = false;
             low[node] = ids[at];
 
             /*
-            we empty if till we find the start of SCC, i.e. the at node,
-            if we find the at node in the stack before it get's empty,
+            we empty it, till we find the start of SCC, i.e. the 'at' node,
+            if we find the 'at' node in the stack before it get's empty,
             then there must a node in it, that will form a scc with its neighbours,
             so break the loop when we find the at node in the stack
             */
@@ -84,6 +84,7 @@ void Graph::tarjansUtil(int at){
     }
 }
 
+// main tarjan's function
 unordered_map<int, list<int>> Graph::tarjansSSC(){
     for(int i = 0; i < V; i++){
         ids[i] = UNVISITED;

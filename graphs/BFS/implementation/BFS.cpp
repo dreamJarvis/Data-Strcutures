@@ -1,6 +1,3 @@
-/*
-
-*/
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -31,12 +28,11 @@ void Graph::addEdge(int v, int w){
 // tc : O(v + E)
 void Graph::BFS(){
     bool visited[V] = {false};
+    queue<int> q;
 
     for(int i = 1; i < V; i++){
         if(!visited[i]){
-            queue<int> q;
             q.push(i);
-
             while(!q.empty()){
                 int temp = q.front();
 
@@ -53,6 +49,7 @@ void Graph::BFS(){
                     }
                 }
             }
+            cout << "\n";
         }
     }
 }
