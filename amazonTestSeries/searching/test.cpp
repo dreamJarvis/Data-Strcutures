@@ -1,17 +1,20 @@
-/* C++ Program to search an element
-in a sorted and pivoted array*/
 #include <bits/stdc++.h>
 using namespace std;
 
-int main(){
-    int x = 1|2|4|5;
+#define ll long long int
+#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
-    if(x&3)
-        cout << "yes" << endl;
-    else
-        cout << "No" << endl;
+int main() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	FIO;
 
-    cout << x << endl;
+	ll t;
+	cin >> t;
+
+	cout << t*10 << endl;
 
 	return 0;
 }

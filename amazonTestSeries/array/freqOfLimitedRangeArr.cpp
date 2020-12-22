@@ -5,16 +5,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void frequencycount(int *arr,int n){
-    int freq[n+1];
-    memset(freq, 0, sizeof(freq));
+// tc : O(n)
+// sc : O(1)
+void frequencycount(vector<int>& arr,int n){
+    for(int i = 0; i < n; i++)
+        arr[i] -= 1;
 
     for(int i = 0; i < n; i++)
-        freq[arr[i]]++;
+        arr[arr[i]%n] = arr[arr[i]%n]+n;
 
-    for(int i = 1; i <= n; i++)
-        arr[i-1] = freq[i];
+    for(int i = 0; i < n; i++)
+        arr[i] /= n;
 }
+
+// tc : O(n)
+// sc : O(1)
+// void frequencycount(vector<int>& arr,int n){
+//     for(int i = 0; i < n; i++)
+//         arr[i] -= 1;
+//
+//
+//     for(int i = 0; i < n; i++){
+//         if(arr[i] == i){
+//             continue;
+//         }
+//
+//         while(arr[i] != arr[arr[i]]){
+//             swap(arr[i], arr[arr[i]]);
+//         }
+//     }
+//
+//     for(int i = 0; i < n; i++){
+//         if(arr[i] == i)
+//             arr[i] = n;
+//     }
+//
+//     for(int i = 0; i < n; i++){
+//         if(arr[i] < n){
+//             arr[arr[i]] = (arr[arr[i]]/n)*n + n;
+//         }
+//     }
+//
+//     for(int i = 0; i < n; i++){
+//         arr[i] /= n;
+//     }
+// }
 
 // Driver function
 int main(){

@@ -1,8 +1,8 @@
-/*
-*/
 #include <bits/stdc++.h>
 using namespace std;
 
+// tc : O(n)
+// sc : 2*O(n)
 int maxIndexDiff(int arr[], int n) {
     int leftArr[n];
     int rightArr[n];
@@ -30,7 +30,6 @@ int maxIndexDiff(int arr[], int n) {
     int maxDiff = -1;
     int i = 0, j = 0;
     while(i < n && j < n){
-        // cout << j << " -- " << i << endl;
         if(leftArr[i] <= rightArr[j]){
             maxDiff = max(maxDiff, (j-i));
             j++;

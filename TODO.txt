@@ -18,6 +18,7 @@ https://leetcode.com/problems/edit-distance/
 https://leetcode.com/problems/longest-consecutive-sequence/
 410. Split Array Largest Sum
 https://www.spoj.com/problems/AGGRCOW/
+695. Max Area of Island : https://leetcode.com/problems/max-area-of-island/
 
 
  Q ) Balanced BST (questions)
