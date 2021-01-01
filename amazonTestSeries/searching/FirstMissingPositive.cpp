@@ -11,30 +11,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// tc: O(n)
-// sc: O(n)
-// int firstMissingPositiveII(vector<int>& nums){
-//     int n = nums.size();
-//     int minPos = INT_MAX, maxPos = 1;
+// // tc : O(n)
+// // sc : O(1)
+// int findMissing(int arr[], int n) {
+// 	int j = 0;
+// 	int smallestNumber = INT_MAX;
+// 	for(int i = 0; i < n; i++)
+// 		smallestNumber = min(smallestNumber, arr[i]);
 //
-//     unordered_map<int, bool> visit;
-//     for(int i = 0; i < n; i++){
-//         if(nums[i] > 0){
-//             minPos = min(minPos, nums[i]);
-//             maxPos = max(maxPos, nums[i]);
-//             visit[nums[i]] = true;
-//         }
-//     }
+// 	if(smallestNumber > 1)
+// 		return 1;
 //
-//     if(minPos > 1)
-//         return 1;
+// 	for(int i = 0; i < n; i++){
+// 		if(arr[i] < 0){
+// 			swap(arr[i], arr[j]);
+// 			j++;
+// 		}
+// 	}
 //
-//     for(int i = 1; i <= maxPos; i++){
-//         if(!visit.count(i))
-//             return i;
-//     }
+// 	for(int i = j; i < n; i++){
+// 		if(arr[i] >= n)
+// 			continue;
 //
-//     return maxPos+1;
+// 		while(arr[i] != arr[arr[i]+j]){
+// 			if(arr[i]+j >= n || arr[i] >= n)
+// 				break;
+// 			swap(arr[i], arr[arr[i]+j]);
+// 		}
+// 	}
+//
+// 	int ans = -1;
+// 	for(int i = j+1; i < n; i++){
+// 		if(abs(i-j) != arr[i]){
+// 			ans = (i-j);
+// 			break;
+// 		}
+// 	}
+//
+// 	return ans != -1 ? ans : n+1;
 // }
 
 // tc : O(n)
@@ -43,7 +57,7 @@ int firstMissingPositive(vector<int>& nums) {
     int n = nums.size();
 
     for(int i = 0; i < n; i++){
-        while(nums[i] >= 1 && nums[i] <= n && nums[i] != nums[nums[i]-1]){
+        while((nums[i] >= 1 && nums[i] <= n) && nums[i] != nums[nums[i]-1]){
             swap(nums[i], nums[nums[i]-1 ]);
         }
     }

@@ -94,7 +94,8 @@ double MedianOfArrays(vector<int>& nums1, vector<int>& nums2){
         int partitionY = (x+y+1)/2-partitionX;
 
         // if partitionX is 0, it means there is nothing on left side, .'. use -INF
-        /* if partitionX is == length of nums1, then it has reached the end of the elements, ans there's nothing on the right side, .'. use +INF */
+        /* if partitionX is == length of nums1, then it has reached the end of the elements, 
+        ans there's nothing on the right side, .'. use +INF */
         int maxLeftX = (partitionX == 0) ? INT_MIN : nums1[partitionX-1];
         int minRightX = (partitionX == x) ? INT_MAX : nums1[partitionX];
 

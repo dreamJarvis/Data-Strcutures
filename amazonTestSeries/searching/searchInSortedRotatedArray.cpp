@@ -1,77 +1,72 @@
-/*
-    9. Search in a Sorted and Rotated Array
-    https://practice.geeksforgeeks.org/problems/search-in-a-rotated-array0959/0/?track=amazon-searching&batchId=192
-*/
 #include <bits/stdc++.h>
 using namespace std;
 
-// O(log(n))
-int binarySearch(vector<int> &arr, int low, int high, int key){
-    if(high < low)  return -1;
+#define ll long long int
 
-    int mid = (high+low)/2;
+int findPivot(vector<int> &arr){
+	int n = arr.size()-1;
+	int s = 0, e = n;
 
-    if(key == arr[mid])
-        return mid;
+	while(s <= e){
+		int mid = (s+e)/2;
 
-    if(key > arr[mid])
-        return binarySearch(arr, mid+1, high, key);
-    return binarySearch(arr, low, mid-1, key);
+		if(arr[mid] > arr[mid+1]){
+			return mid;
+		}
+
+		if(arr[mid] <= arr[0]){
+			e = mid-1;
+		}
+		else{
+			s = mid+1;
+		}
+	}
+
+	return -1;
 }
 
-// finding pivot
-int findPivot(vector<int> &arr, int low, int high){
-    if(high < low)  return -1;
-    if(high == low) return low;
+int binarySearch(vector<int> &arr, int s, int e, int K){
+	while(s <= e){
+		int mid = (s+e)/2;
 
-    int mid = (high+low)/2;
+		if(arr[mid] == K)
+			return mid;
 
-    if(mid < high && arr[mid] > arr[mid+1])
-        return mid;
+		if(arr[mid] < K)
+			s = mid+1;
+		else
+			e = mid-1;
+	}
 
-    if(mid > low && arr[mid] < arr[mid-1])
-        return (mid-1);
-
-    if(arr[low] >= arr[mid])
-        return findPivot(arr, low, mid-1);
-
-    return findPivot(arr, mid+1, high);
+	return -1;
 }
 
-int search(vector<int>& arr, int key) {
-    int n = arr.size();
-    int pivot = findPivot(arr, 0, n-1);
+int Search(vector<int> arr, int K) {
+	int n = arr.size();
+	int pivot = findPivot(arr);
 
-    // if there's no pivot, then simple binary search will do the work
-    if (pivot == -1)
-        return binarySearch(arr, 0, n - 1, key);
+	// it means no pivot, the array is sorted.
+	if(pivot == -1){
+		return binarySearch(arr, 0, n-1, K);
+	}
 
-    // if the pivot is the key index
-    if (arr[pivot] == key)
-        return pivot;
-
-    // else search on both side of the pivot
-    // because arr[0] < arr[pivot+1]
-    if (key >= arr[0])
-        return binarySearch(arr, 0, pivot - 1, key);
-
-    return binarySearch(arr, pivot + 1, n - 1, key);
+	if(arr[pivot] == K)
+		return pivot;
+	if(K < arr[0])
+		return binarySearch(arr, pivot+1, n-1, K);
+	return binarySearch(arr, 0, pivot, K);
 }
 
 // Driver function
-int main(){
-    vector<int> arr({5,6,7,8,9,10,1,2,3});
-    int K = 2;
-    // vector<int> arr({3, 1, 2});
-    // int K = 1;
-    // vector<int> arr({4,5,6,7,0,1,2});
-    // int K = 0;
-    // vector<int> arr({1});
-    // int K = 0;
-    // vector<int> arr({1, 3});
-    // int K = 4;
+int main() {
+	vector<int> a({5, 6,7,8,9,10,1,2,3});
+	long long x = 10;
 
-    cout << search(arr, K) << endl;
+	// vector<int> a({3,1,2});
+	// long long x = 1;
 
-    return 0;
+	cout << Search(a, x) << endl;
+
+	cin.get();
+	return 0;
 }
